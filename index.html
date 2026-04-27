@@ -14,22 +14,47 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --petrol-dark:#324A52;--petrol:#4A6970;--petrol-mid:#6E8896;
-  --amber:#F5C04A;--amber-hot:#FFE8A0;--cyan:#00E5FF;
-  --bg:#F5F4EE;--text-light:#E0EAF0;
-  --surface:#1e2d31;--surface2:#243540;--surface3:#2e404a;
+  --amber:#F5C04A;--amber-hot:#FFE8A0;
+  --text-light:#E0EAF0;
+  --surface2:#243540;--surface3:#2e404a;
   --border:rgba(245,192,74,0.25);--border2:rgba(255,255,255,0.1);
   --radius:20px;
 }
-html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4EE;font-family:Inter,sans-serif}
-.main-frame{width:100%;height:100%;display:flex;justify-content:center;align-items:center;position:relative;touch-action:none}
-svg{width:100vw;height:100vh;height:100dvh;max-width:412px;max-height:915px;display:block;touch-action:none;pointer-events:all}
-text{font-family:Inter,sans-serif}
-@media(min-width:600px){svg{border:1px solid #333}}
+html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4EE;font-family:Inter,sans-serif;}
 
-/* ── SCREENS ── */
+/* Main frame */
+.main-frame{
+  width:100%;height:100%;
+  display:flex;justify-content:center;align-items:center;
+  position:relative;
+}
+
+/* SVG wrapper - position relative so hit divs can overlay */
+.svg-wrap{
+  position:relative;
+  width:100vw;height:100vh;height:100dvh;
+  max-width:412px;max-height:915px;
+}
+.svg-wrap svg{
+  width:100%;height:100%;
+  display:block;
+}
+
+/* Hit areas - absolutely positioned over waben */
+.hit-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.hit-layer > div{
+  position:absolute;
+  pointer-events:all;
+}
+
+/* SCREENS */
 .screen{
   position:fixed;inset:0;z-index:50;
   display:flex;flex-direction:column;
@@ -39,8 +64,6 @@ text{font-family:Inter,sans-serif}
   overflow:hidden;
 }
 .screen.open{transform:translateY(0)}
-
-/* ── SCREEN HEADER ── */
 .scr-header{
   display:flex;align-items:center;gap:14px;
   padding:max(env(safe-area-inset-top,16px),16px) 20px 16px;
@@ -57,215 +80,118 @@ text{font-family:Inter,sans-serif}
 .scr-title{font-size:18px;font-weight:700;color:var(--amber);flex:1}
 .scr-body{flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch}
 
-/* ── SECTION LABEL ── */
-.sl{
-  font-size:10px;font-weight:700;color:var(--petrol-mid);
-  letter-spacing:.14em;text-transform:uppercase;
-  margin:24px 0 12px;display:flex;align-items:center;gap:10px;
-}
+.sl{font-size:10px;font-weight:700;color:var(--petrol-mid);letter-spacing:.14em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:10px;}
 .sl::after{content:"";flex:1;height:1px;background:var(--border)}
 .sl:first-child{margin-top:0}
 
-/* ── CARDS ── */
-.card{
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:var(--radius);padding:18px;margin-bottom:12px;
-}
+.card{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:18px;margin-bottom:12px;}
 .card-title{font-size:15px;font-weight:700;color:var(--amber);margin-bottom:6px}
 .card-body{font-size:14px;color:var(--text-light);line-height:1.6}
-.card-sub{font-size:12px;color:var(--petrol-mid);margin-top:4px}
 
-/* ── DETAIL SCREEN ── */
-.detail-hero{
-  background:linear-gradient(160deg,var(--petrol),var(--petrol-dark));
-  border:1px solid var(--border);border-radius:var(--radius);
-  padding:22px;margin-bottom:16px;text-align:center;
-}
+/* Detail screen */
+.detail-hero{background:linear-gradient(160deg,var(--petrol),var(--petrol-dark));border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px;text-align:center;}
 .detail-emoji{font-size:42px;margin-bottom:10px}
-.detail-name{font-size:22px;font-weight:800;color:var(--amber);letter-spacing:-.3px}
+.detail-name{font-size:22px;font-weight:800;color:var(--amber);}
 .detail-muscle{font-size:13px;color:var(--petrol-mid);margin-top:4px}
-
 .val-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.val-tile{
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:14px;padding:14px 8px;text-align:center;
-}
+.val-tile{background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:14px 8px;text-align:center;}
 .val-tile-label{font-size:10px;font-weight:700;color:var(--petrol-mid);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
 .val-tile-ctrl{display:flex;align-items:center;justify-content:center;gap:8px}
-.val-btn{
-  width:28px;height:28px;border-radius:50%;
-  border:1px solid var(--border);background:transparent;
-  color:var(--amber);font-size:16px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  font-family:Inter,sans-serif;line-height:1;
-}
+.val-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--amber);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;line-height:1;}
 .val-btn:active{background:rgba(245,192,74,0.15)}
 .val-num{font-size:18px;font-weight:700;color:var(--text-light);min-width:36px;text-align:center}
-
-/* History chart */
 .history-wrap{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:16px;margin-bottom:12px}
 .history-title{font-size:11px;font-weight:700;color:var(--petrol-mid);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
 .chart-area{height:80px;position:relative;display:flex;align-items:flex-end;gap:4px}
 .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
-.chart-bar{width:100%;background:var(--petrol);border-radius:4px 4px 0 0;min-height:2px;transition:height .3s}
+.chart-bar{width:100%;background:var(--petrol);border-radius:4px 4px 0 0;min-height:2px}
 .chart-bar.current{background:var(--amber)}
 .chart-lbl{font-size:9px;color:var(--petrol-mid);text-align:center}
 .chart-val{font-size:9px;color:var(--text-light);font-weight:600;text-align:center}
 .no-history{font-size:13px;color:var(--petrol-mid);text-align:center;padding:16px 0}
-
 .note-box{background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:14px 16px;margin-bottom:12px;font-size:13px;color:var(--text-light);line-height:1.65}
-.note-icon{margin-right:6px}
 
-/* ── MENU SCREEN ── */
-.menu-item{
-  display:flex;align-items:center;gap:14px;
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:14px;padding:16px;margin-bottom:10px;
-  cursor:pointer;transition:background .15s;
-}
+/* Menu */
+.menu-item{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer;}
 .menu-item:active{background:var(--surface3)}
 .menu-icon{font-size:22px;width:36px;text-align:center;flex-shrink:0}
 .menu-label{font-size:15px;font-weight:600;color:var(--text-light);flex:1}
 .menu-chevron{color:var(--petrol-mid);font-size:14px}
 
-/* ── SUBSCREEN (slides from right) ── */
-.subscreen{
-  position:fixed;inset:0;z-index:60;
-  display:flex;flex-direction:column;
-  background:var(--petrol-dark);
-  transform:translateX(100%);
-  transition:transform .28s cubic-bezier(.4,0,.2,1);
-  overflow:hidden;
-}
+/* Subscreen */
+.subscreen{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:var(--petrol-dark);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow:hidden;}
 .subscreen.open{transform:translateX(0)}
 
-/* ── KÖRPERGEWICHT ── */
+/* KW */
 .kw-input-row{display:flex;gap:10px;margin-bottom:16px}
-.kw-input{
-  flex:1;background:var(--surface2);border:1px solid var(--border);
-  border-radius:12px;padding:14px 16px;font-size:18px;font-weight:700;
-  color:var(--text-light);font-family:Inter,sans-serif;
-  text-align:center;outline:none;
-}
+.kw-input{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:18px;font-weight:700;color:var(--text-light);font-family:Inter,sans-serif;text-align:center;outline:none;}
 .kw-input:focus{border-color:var(--amber)}
-.kw-save-btn{
-  padding:14px 20px;background:var(--amber);border:none;
-  border-radius:12px;color:#1a0e00;font-size:15px;font-weight:700;
-  cursor:pointer;font-family:Inter,sans-serif;white-space:nowrap;
-}
-.kw-save-btn:active{opacity:.85}
-.kw-entry{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:12px 0;border-bottom:1px solid var(--border2);
-  font-size:14px;color:var(--text-light);
-}
+.kw-save-btn{padding:14px 20px;background:var(--amber);border:none;border-radius:12px;color:#1a0e00;font-size:15px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;}
+.kw-entry{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border2);font-size:14px;color:var(--text-light);}
 .kw-entry:last-child{border-bottom:none}
 .kw-date{color:var(--petrol-mid);font-size:12px}
 .kw-val{font-weight:700;color:var(--amber)}
 
-/* ── ZIELE GRID ── */
+/* Ziele */
 .goals-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.goal-card{
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:14px;padding:14px 12px;
-}
+.goal-card{background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:14px 12px;}
 .goal-title{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:5px}
 .goal-desc{font-size:12px;color:var(--text-light);line-height:1.5}
 
-/* ── PRINZIPIEN ── */
-.prinzip-card{
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:14px;padding:16px;margin-bottom:10px;
-}
+/* Prinzipien */
+.prinzip-card{background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:16px;margin-bottom:10px;}
 .prinzip-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .prinzip-icon{font-size:20px}
 .prinzip-title{font-size:14px;font-weight:700;color:var(--amber)}
 .prinzip-text{font-size:13px;color:var(--text-light);line-height:1.55}
 .prinzip-detail{font-size:12px;color:var(--petrol-mid);margin-top:6px;line-height:1.5}
 
-/* ── ALTERNATIVEN ── */
-.alt-card{
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:14px;padding:16px;margin-bottom:10px;
-}
-.alt-label{font-size:14px;font-weight:700;color:var(--amber);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+/* Alternativen */
+.alt-card{background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:16px;margin-bottom:10px;}
+.alt-label{font-size:14px;font-weight:700;color:var(--amber);margin-bottom:8px}
 .alt-row{font-size:12px;color:var(--text-light);line-height:1.7}
 .alt-key{color:var(--petrol-mid);font-weight:600}
 
-/* ── EINSTELLUNGEN ── */
-.setting-row{
-  display:flex;justify-content:space-between;align-items:center;
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:14px;padding:16px;margin-bottom:10px;
-}
+/* Einstellungen */
+.setting-row{display:flex;justify-content:space-between;align-items:center;background:var(--surface2);border:1px solid var(--border2);border-radius:14px;padding:16px;margin-bottom:10px;}
 .setting-label{font-size:14px;font-weight:600;color:var(--text-light)}
 .setting-sub{font-size:12px;color:var(--petrol-mid);margin-top:3px}
 .step-ctrl{display:flex;align-items:center;gap:10px}
-.step-btn{
-  width:34px;height:34px;border-radius:50%;
-  border:1px solid var(--border);background:transparent;
-  color:var(--amber);font-size:18px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;
-}
+.step-btn{width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--amber);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;}
 .step-btn:active{background:rgba(245,192,74,0.15)}
 .step-val{font-size:16px;font-weight:700;color:var(--amber);min-width:44px;text-align:center}
-
-/* ── DANGER BUTTONS ── */
-.danger-btn{
-  width:100%;padding:16px;border-radius:14px;
-  border:1px solid rgba(255,85,85,0.3);background:rgba(255,85,85,0.08);
-  color:#ff5555;font-size:14px;font-weight:600;cursor:pointer;
-  font-family:Inter,sans-serif;margin-bottom:10px;text-align:left;
-}
+.danger-btn{width:100%;padding:16px;border-radius:14px;border:1px solid rgba(255,85,85,0.3);background:rgba(255,85,85,0.08);color:#ff5555;font-size:14px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:10px;text-align:left;}
 .danger-btn:active{background:rgba(255,85,85,0.18)}
-.action-btn{
-  width:100%;padding:16px;border-radius:14px;
-  border:1px solid var(--border);background:var(--surface2);
-  color:var(--text-light);font-size:14px;font-weight:600;cursor:pointer;
-  font-family:Inter,sans-serif;margin-bottom:10px;text-align:left;
-  display:flex;align-items:center;gap:10px;
-}
+.action-btn{width:100%;padding:16px;border-radius:14px;border:1px solid var(--border);background:var(--surface2);color:var(--text-light);font-size:14px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
 .action-btn:active{background:var(--surface3)}
 
-/* ── CONFIRM DIALOG ── */
-.confirm-backdrop{
-  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;transition:opacity .2s;
-}
+/* Confirm */
+.confirm-backdrop{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
 .confirm-backdrop.visible{opacity:1;pointer-events:all}
-.confirm-box{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:20px;padding:28px 24px;max-width:320px;width:90%;
-}
+.confirm-box{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:28px 24px;max-width:320px;width:90%;}
 .confirm-title{font-size:17px;font-weight:700;color:var(--text-light);margin-bottom:8px}
 .confirm-msg{font-size:14px;color:var(--petrol-mid);line-height:1.55;margin-bottom:22px}
 .confirm-btns{display:flex;gap:10px}
 .confirm-cancel{flex:1;padding:13px;border-radius:12px;border:1px solid var(--border2);background:transparent;color:var(--text-light);font-size:14px;font-weight:600;cursor:pointer;font-family:Inter,sans-serif}
 .confirm-ok{flex:1;padding:13px;border-radius:12px;border:none;background:#ff5555;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif}
 
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:40px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:99px;padding:10px 22px;
-  font-size:14px;font-weight:600;color:var(--amber);
-  z-index:300;opacity:0;transition:all .25s;white-space:nowrap;
-  pointer-events:none;
-}
+/* Toast */
+.toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface2);border:1px solid var(--border);border-radius:99px;padding:10px 22px;font-size:14px;font-weight:600;color:var(--amber);z-index:300;opacity:0;transition:all .25s;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ── ÜBER ── */
+/* Über */
 .about-logo{text-align:center;padding:30px 0 20px}
-.about-logo-hex{font-size:52px}
-.about-app-name{font-size:28px;font-weight:800;color:var(--amber);letter-spacing:-.5px}
+.about-app-name{font-size:28px;font-weight:800;color:var(--amber);}
 .about-version{font-size:13px;color:var(--petrol-mid);margin-top:4px}
+
+@media(min-width:600px){svg{border:1px solid #333}}
 </style>
 </head>
 <body>
 
 <div class="main-frame">
-<svg viewBox="0 0 412 915" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+  <div class="svg-wrap">
+<svg style="pointer-events:none" viewBox="0 0 412 915" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 <defs>
 <linearGradient id="vg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4A6970"/><stop offset="100%" stop-color="#324A52"/></linearGradient>
 <filter id="sch" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="1" dy="2"/><feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -2997,11 +2923,22 @@ text{font-family:Inter,sans-serif}
 
 <!-- Touch targets -->
 </svg>
+    <div class="hit-layer">
+<div id="hit-0" style="position:absolute;left:5.8%;top:3.0%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="0"></div>
+<div id="hit-1" style="position:absolute;left:52.7%;top:4.5%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="1"></div>
+<div id="hit-2" style="position:absolute;left:5.8%;top:29.1%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="2"></div>
+<div id="hit-3" style="position:absolute;left:54.4%;top:27.5%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="3"></div>
+<div id="hit-4" style="position:absolute;left:5.8%;top:52.1%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="4"></div>
+<div id="hit-5" style="position:absolute;left:52.7%;top:53.7%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="5"></div>
+<div id="hit-6" style="position:absolute;left:5.8%;top:78.3%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="6"></div>
+<div id="hit-7" style="position:absolute;left:52.7%;top:76.7%;width:41.7%;height:18.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;" data-idx="7"></div>
+<div id="hit-menu" style="position:absolute;left:90.5%;top:93.2%;width:17%;height:7.7%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;"></div>
+
+    </div>
+  </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     DETAIL SCREEN
-═══════════════════════════════════════════════ -->
+<!-- DETAIL SCREEN -->
 <div class="screen" id="screen-detail">
   <div class="scr-header">
     <button class="scr-back" onclick="closeScreen('screen-detail')">←</button>
@@ -3013,7 +2950,6 @@ text{font-family:Inter,sans-serif}
       <div class="detail-name" id="det-name">–</div>
       <div class="detail-muscle" id="det-muscle">–</div>
     </div>
-
     <div class="val-row">
       <div class="val-tile">
         <div class="val-tile-label">Gewicht kg</div>
@@ -3040,95 +2976,45 @@ text{font-family:Inter,sans-serif}
         </div>
       </div>
     </div>
-
     <div class="history-wrap">
       <div class="history-title">Gewicht · letzte 4 Wochen</div>
       <div class="chart-area" id="det-chart"></div>
     </div>
-
     <div class="note-box" id="det-note"></div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     MENU SCREEN
-═══════════════════════════════════════════════ -->
+<!-- MENU SCREEN -->
 <div class="screen" id="screen-menu">
   <div class="scr-header">
     <button class="scr-back" onclick="closeScreen('screen-menu')">←</button>
     <div class="scr-title">Menü</div>
   </div>
   <div class="scr-body">
-    <div class="menu-item" onclick="openSub('sub-kw')">
-      <div class="menu-icon">⚖️</div>
-      <div class="menu-label">Körpergewicht</div>
-      <div class="menu-chevron">›</div>
-    </div>
-    <div class="menu-item" onclick="openSub('sub-ziele')">
-      <div class="menu-icon">🎯</div>
-      <div class="menu-label">Meine Ziele</div>
-      <div class="menu-chevron">›</div>
-    </div>
-    <div class="menu-item" onclick="openSub('sub-prinzip')">
-      <div class="menu-icon">📋</div>
-      <div class="menu-label">Grundprinzipien</div>
-      <div class="menu-chevron">›</div>
-    </div>
-    <div class="menu-item" onclick="openSub('sub-alt')">
-      <div class="menu-icon">🩹</div>
-      <div class="menu-label">Alternativen bei Beschwerden</div>
-      <div class="menu-chevron">›</div>
-    </div>
-    <div class="menu-item" onclick="exportJSON()">
-      <div class="menu-icon">↓</div>
-      <div class="menu-label">Export JSON</div>
-      <div class="menu-chevron">›</div>
-    </div>
-    <div class="menu-item" onclick="importJSON()">
-      <div class="menu-icon">↑</div>
-      <div class="menu-label">Import JSON</div>
-      <div class="menu-chevron">›</div>
-    </div>
-    <div class="menu-item" onclick="openSub('sub-settings')">
-      <div class="menu-icon">⚙️</div>
-      <div class="menu-label">Einstellungen</div>
-      <div class="menu-chevron">›</div>
-    </div>
-    <div class="menu-item" onclick="openSub('sub-about')">
-      <div class="menu-icon">ℹ️</div>
-      <div class="menu-label">Über die App</div>
-      <div class="menu-chevron">›</div>
-    </div>
+    <div class="menu-item" onclick="openSub('sub-kw')"><div class="menu-icon">⚖️</div><div class="menu-label">Körpergewicht</div><div class="menu-chevron">›</div></div>
+    <div class="menu-item" onclick="openSub('sub-ziele')"><div class="menu-icon">🎯</div><div class="menu-label">Meine Ziele</div><div class="menu-chevron">›</div></div>
+    <div class="menu-item" onclick="openSub('sub-prinzip')"><div class="menu-icon">📋</div><div class="menu-label">Grundprinzipien</div><div class="menu-chevron">›</div></div>
+    <div class="menu-item" onclick="openSub('sub-alt')"><div class="menu-icon">🩹</div><div class="menu-label">Alternativen bei Beschwerden</div><div class="menu-chevron">›</div></div>
+    <div class="menu-item" onclick="exportJSON()"><div class="menu-icon">↓</div><div class="menu-label">Export JSON</div><div class="menu-chevron">›</div></div>
+    <div class="menu-item" onclick="importJSON()"><div class="menu-icon">↑</div><div class="menu-label">Import JSON</div><div class="menu-chevron">›</div></div>
+    <div class="menu-item" onclick="openSub('sub-settings')"><div class="menu-icon">⚙️</div><div class="menu-label">Einstellungen</div><div class="menu-chevron">›</div></div>
+    <div class="menu-item" onclick="openSub('sub-about')"><div class="menu-icon">ℹ️</div><div class="menu-label">Über die App</div><div class="menu-chevron">›</div></div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════
-     SUBSCREENS
-═══════════════════════════════════════════════ -->
-
-<!-- Körpergewicht -->
+<!-- SUBSCREENS -->
 <div class="subscreen" id="sub-kw">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeSub('sub-kw')">←</button>
-    <div class="scr-title">Körpergewicht</div>
-  </div>
+  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-kw')">←</button><div class="scr-title">Körpergewicht</div></div>
   <div class="scr-body">
     <div class="sl">Eintragen</div>
-    <div class="kw-input-row">
-      <input class="kw-input" id="kw-input" type="number" step="0.1" min="30" max="300" placeholder="kg">
-      <button class="kw-save-btn" onclick="saveKW()">Speichern</button>
-    </div>
+    <div class="kw-input-row"><input class="kw-input" id="kw-input" type="number" step="0.1" min="30" max="300" placeholder="kg"><button class="kw-save-btn" onclick="saveKW()">Speichern</button></div>
     <div class="sl">Verlauf</div>
     <div id="kw-list"></div>
   </div>
 </div>
 
-<!-- Meine Ziele -->
 <div class="subscreen" id="sub-ziele">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeSub('sub-ziele')">←</button>
-    <div class="scr-title">Meine Ziele</div>
-  </div>
+  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-ziele')">←</button><div class="scr-title">Meine Ziele</div></div>
   <div class="scr-body">
     <div class="goals-grid">
       <div class="goal-card"><div class="goal-title">Stoffwechsel</div><div class="goal-desc">Krafttraining aktiviert den Stoffwechsel dauerhaft — auch in Ruhephasen</div></div>
@@ -3139,43 +3025,31 @@ text{font-family:Inter,sans-serif}
   </div>
 </div>
 
-<!-- Grundprinzipien -->
 <div class="subscreen" id="sub-prinzip">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeSub('sub-prinzip')">←</button>
-    <div class="scr-title">Grundprinzipien</div>
-  </div>
+  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-prinzip')">←</button><div class="scr-title">Grundprinzipien</div></div>
   <div class="scr-body">
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🧘</span><span class="prinzip-title">Nacken entspannt</span></div><div class="prinzip-text">Immer auf Nackenspannung achten — vor und während jeder Übung.</div><div class="prinzip-detail">Der Nacken ist der sensibelste Bereich dieses Plans. Schultern unten, Kiefer locker, Blick geradeaus. Bei ersten Anzeichen sofort Gewicht reduzieren.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🫁</span><span class="prinzip-title">Keine Pressatmung</span></div><div class="prinzip-text">Ausatmen bei Anstrengung — gleichmäßig und fließend.</div><div class="prinzip-detail">Pressatmung erhöht den Blutdruck sprunghaft. Ausatmen beim Drücken/Ziehen/Strecken. Einatmen beim Ablassen.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🐢</span><span class="prinzip-title">Langsames Tempo</span></div><div class="prinzip-text">3 Sek. hoch / 3 Sek. runter — Qualität vor Geschwindigkeit.</div><div class="prinzip-detail">Das langsame Ablassen stimuliert deutlich mehr Muskelfasern und schützt Sehnen und Gelenke.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">⚖️</span><span class="prinzip-title">Sauber vor schwer</span></div><div class="prinzip-text">Technik zuerst — Gewicht steigern erst wenn die Form sitzt.</div><div class="prinzip-detail">Ist die letzte Wiederholung so sauber wie die erste? Dann darf das Gewicht in 0,5–1 kg Schritten erhöht werden.</div></div>
+    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🧘</span><span class="prinzip-title">Nacken entspannt</span></div><div class="prinzip-text">Immer auf Nackenspannung achten — vor und während jeder Übung.</div><div class="prinzip-detail">Der Nacken ist der sensibelste Bereich dieses Plans. Schultern unten, Kiefer locker, Blick geradeaus.</div></div>
+    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🫁</span><span class="prinzip-title">Keine Pressatmung</span></div><div class="prinzip-text">Ausatmen bei Anstrengung — gleichmäßig und fließend.</div><div class="prinzip-detail">Pressatmung erhöht den Blutdruck sprunghaft. Ausatmen beim Drücken/Ziehen/Strecken.</div></div>
+    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🐢</span><span class="prinzip-title">Langsames Tempo</span></div><div class="prinzip-text">3 Sek. hoch / 3 Sek. runter — Qualität vor Geschwindigkeit.</div><div class="prinzip-detail">Das langsame Ablassen stimuliert mehr Muskelfasern und schützt Sehnen und Gelenke.</div></div>
+    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">⚖️</span><span class="prinzip-title">Sauber vor schwer</span></div><div class="prinzip-text">Technik zuerst — Gewicht steigern erst wenn die Form sitzt.</div><div class="prinzip-detail">Ist die letzte Wiederholung so sauber wie die erste? Dann darf das Gewicht erhöht werden.</div></div>
     <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🔁</span><span class="prinzip-title">Konstanz > Intensität</span></div><div class="prinzip-text">Regelmäßig und moderat schlägt gelegentliches Harttraining.</div><div class="prinzip-detail">3× pro Woche über Monate produziert mehr Ergebnis als sporadisches Intensivtraining.</div></div>
     <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🎯</span><span class="prinzip-title">Kein Muskelversagen</span></div><div class="prinzip-text">2–3 Wiederholungen Reserve behalten — immer kontrolliert.</div><div class="prinzip-detail">Intensität 6–7 von 10: genug Reiz für Wachstum, genug Reserve für schnelle Regeneration.</div></div>
   </div>
 </div>
 
-<!-- Alternativen bei Beschwerden -->
 <div class="subscreen" id="sub-alt">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeSub('sub-alt')">←</button>
-    <div class="scr-title">Alternativen bei Beschwerden</div>
-  </div>
+  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-alt')">←</button><div class="scr-title">Alternativen bei Beschwerden</div></div>
   <div class="scr-body">
-    <div class="alt-card"><div class="alt-label">🧘 Nackenproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Bankdrücken, Seitheben, Reverse Flyes<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichtes Rudern<br><span class="alt-key">Warum: </span>Glute Bridge und abgestütztes Rudern entlasten den Nacken vollständig.</div></div>
-    <div class="alt-card"><div class="alt-label">🔵 Schulterproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Klassisches Bankdrücken<br><span class="alt-key">Stattdessen: </span>Floor Press, reduzierte Bewegung<br><span class="alt-key">Warum: </span>Floor Press begrenzt den Bewegungsradius auf den sicheren Bereich.</div></div>
-    <div class="alt-card"><div class="alt-label">🟡 Ischias / Rücken</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Romanian Deadlift<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichte Squats<br><span class="alt-key">Warum: </span>Glute Bridge trainiert dieselben Muskeln ohne axialen Druck auf die Wirbelsäule.</div></div>
-    <div class="alt-card"><div class="alt-label">🦵 Knieproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Tiefe Kniebeugen<br><span class="alt-key">Stattdessen: </span>Halbe Squats, Glute Bridge Fokus<br><span class="alt-key">Warum: </span>Halbe Squats bis 90° sind deutlich gelenkschonender.</div></div>
-    <div class="alt-card"><div class="alt-label">🟢 Karpaltunnel</div><div class="alt-row"><span class="alt-key">Weglassen: </span>—<br><span class="alt-key">Stattdessen: </span>Neutrale Handgelenke, SZ-Stange<br><span class="alt-key">Warum: </span>Der Neutral-Griff und SZ-Stange reduzieren die Pronationsbelastung.</div></div>
+    <div class="alt-card"><div class="alt-label">🧘 Nackenproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Bankdrücken, Seitheben<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichtes Rudern</div></div>
+    <div class="alt-card"><div class="alt-label">🔵 Schulterproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Klassisches Bankdrücken<br><span class="alt-key">Stattdessen: </span>Floor Press, reduzierte Bewegung</div></div>
+    <div class="alt-card"><div class="alt-label">🟡 Ischias / Rücken</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Romanian Deadlift<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichte Squats</div></div>
+    <div class="alt-card"><div class="alt-label">🦵 Knieproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Tiefe Kniebeugen<br><span class="alt-key">Stattdessen: </span>Halbe Squats, Glute Bridge Fokus</div></div>
+    <div class="alt-card"><div class="alt-label">🟢 Karpaltunnel</div><div class="alt-row"><span class="alt-key">Weglassen: </span>—<br><span class="alt-key">Stattdessen: </span>Neutrale Handgelenke, SZ-Stange</div></div>
   </div>
 </div>
 
-<!-- Einstellungen -->
 <div class="subscreen" id="sub-settings">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeSub('sub-settings')">←</button>
-    <div class="scr-title">Einstellungen</div>
-  </div>
+  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-settings')">←</button><div class="scr-title">Einstellungen</div></div>
   <div class="scr-body">
     <div class="sl">Wisch-Schrittweite</div>
     <div class="setting-row">
@@ -3187,469 +3061,293 @@ text{font-family:Inter,sans-serif}
       </div>
     </div>
     <div class="sl">Daten</div>
-    <button class="danger-btn" onclick="confirmAction('reset-prog','Progression zurücksetzen?','Alle Gewichte werden auf die Startwerte zurückgesetzt. Der Verlauf bleibt erhalten.')">⚠️ &nbsp;Progression zurücksetzen</button>
+    <button class="danger-btn" onclick="confirmAction('reset-prog','Progression zurücksetzen?','Alle Gewichte werden auf die Startwerte zurückgesetzt.')">⚠️ &nbsp;Progression zurücksetzen</button>
     <button class="danger-btn" onclick="confirmAction('delete-all','Alle Daten löschen?','Gewichte, Verlauf, Körpergewicht — alles wird unwiderruflich gelöscht.')">🗑️ &nbsp;Alle Daten löschen</button>
   </div>
 </div>
 
-<!-- Über die App -->
 <div class="subscreen" id="sub-about">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeSub('sub-about')">←</button>
-    <div class="scr-title">Über mkraft</div>
-  </div>
+  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-about')">←</button><div class="scr-title">Über mkraft</div></div>
   <div class="scr-body">
     <div class="about-logo">
-      <div class="about-logo-hex">⬡</div>
       <div class="about-app-name">mkraft</div>
       <div class="about-version">Version 2.0</div>
     </div>
-    <div class="card">
-      <div class="card-title">Konzept</div>
-      <div class="card-body">Spickzettel-Prinzip: alle Information auf einen Blick, kein Scrollen, kein Menü im Training. Wischen ändert das Gewicht direkt in der Wabe.</div>
-    </div>
-    <div class="card">
-      <div class="card-title">Speicherung</div>
-      <div class="card-body">Alle Daten bleiben lokal auf diesem Gerät (LocalStorage). Kein Account, kein Server, keine Cloud. Export/Import über JSON im Menü.</div>
-    </div>
+    <div class="card"><div class="card-title">Konzept</div><div class="card-body">Spickzettel-Prinzip: alle Information auf einen Blick. Wischen ändert das Gewicht direkt in der Wabe.</div></div>
+    <div class="card"><div class="card-title">Speicherung</div><div class="card-body">Alle Daten bleiben lokal auf diesem Gerät. Kein Account, kein Server. Export/Import über JSON im Menü.</div></div>
   </div>
 </div>
 
-<!-- Hidden file input for import -->
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
-<!-- Confirm Dialog -->
 <div class="confirm-backdrop" id="confirm-backdrop">
   <div class="confirm-box">
     <div class="confirm-title" id="confirm-title">Sicher?</div>
     <div class="confirm-msg" id="confirm-msg"></div>
     <div class="confirm-btns">
       <button class="confirm-cancel" onclick="closeConfirm()">Abbrechen</button>
-      <button class="confirm-ok" id="confirm-ok" onclick="executeConfirm()">Ja, löschen</button>
+      <button class="confirm-ok" onclick="executeConfirm()">Ja, löschen</button>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════
-const EXERCISES = [
-  {id:'goblet',  name:'Goblet Squat',          emoji:'🏋️', muscle:'Quadrizeps · Gesäß',           note:'Langsames Tempo: 3 Sek. runter / 3 Sek. hoch. Nacken entspannt, Blick geradeaus. Ausatmen beim Hochkommen.',                              w:14.0, r:8,  s:3},
-  {id:'rdl',     name:'Ro Deadlift',            emoji:'🏗️', muscle:'Hintere OS · Gesäß · Rücken',  note:'Rücken neutral, Hüfte nach hinten schieben. Ausatmen beim Strecken. Nicht bei Ischias — dann Glute Bridge.',                              w:18.0, r:8,  s:3},
-  {id:'push',    name:'Bankdrücken',            emoji:'💪', muscle:'Brust · Trizeps · Schulter',   note:'Neutral-Griff schont das Schultergelenk. Bei Nackenproblemen weglassen. Alternative: Floor Press.',                                       w:10.0, r:8,  s:3},
-  {id:'row',     name:'Rudern',                 emoji:'🚣', muscle:'Lat · oberer Rücken · Bizeps',  note:'Abgestützt auf der Bank. Ellbogen nah am Körper. Schulterblatt am Ende bewusst einziehen.',                                              w:12.0, r:8,  s:3},
-  {id:'glute',   name:'Glute Bridge',           emoji:'⛩️', muscle:'Gesäß · Core',                 note:'Langsam und bewusst. Becken oben 1–2 Sek. halten. Hervorragend zur Ischias-Prävention.',                                                 w:16.0, r:8,  s:3},
-  {id:'seith',   name:'Seitheben',              emoji:'🕊️', muscle:'Seitliche Schulter',           note:'Pflicht zur Nackenprävention! Sehr leichtes Gewicht. Arme leicht gebeugt, kontrolliert.',                                                w:6.0,  r:12, s:3},
-  {id:'szcurls', name:'SZ-Curls',               emoji:'〰️', muscle:'Bizeps (klassisch)',            note:'Variante zu Hammer Curls — SZ-Stange schont die Handgelenke.',                                                                           w:8.0,  r:10, s:3},
-  {id:'tricep',  name:'Trizeps',                emoji:'⚡', muscle:'Trizeps · Oberarm',             note:'Ellbogen fixiert, 3 Sek. absenken. Leichtes Gewicht! Nacken entspannt. Bei Schmerzen abbrechen.',                                        w:5.0,  r:12, s:3},
-];
+const EXERCISES = [{id:"goblet",name:"Goblet Squat",emoji:"🏋️",muscle:"Quadrizeps · Gesäß",note:"Langsames Tempo: 3 Sek. runter / 3 Sek. hoch. Nacken entspannt, Blick geradeaus.",w:14.0,r:8,s:3},{id:"rdl",name:"Ro Deadlift",emoji:"🏗️",muscle:"Hintere OS · Gesäß · Rücken",note:"Rücken neutral, Hüfte nach hinten schieben. Nicht bei Ischias — dann Glute Bridge.",w:18.0,r:8,s:3},{id:"push",name:"Bankdrücken",emoji:"💪",muscle:"Brust · Trizeps · Schulter",note:"Neutral-Griff schont das Schultergelenk. Bei Nackenproblemen weglassen.",w:10.0,r:8,s:3},{id:"row",name:"Rudern",emoji:"🚣",muscle:"Lat · oberer Rücken · Bizeps",note:"Abgestützt auf der Bank. Schulterblatt am Ende bewusst einziehen.",w:12.0,r:8,s:3},{id:"glute",name:"Glute Bridge",emoji:"⛩️",muscle:"Gesäß · Core",note:"Langsam und bewusst. Becken oben 1–2 Sek. halten.",w:16.0,r:8,s:3},{id:"seith",name:"Seitheben",emoji:"🕊️",muscle:"Seitliche Schulter",note:"Pflicht zur Nackenprävention! Sehr leichtes Gewicht. Arme leicht gebeugt.",w:6.0,r:12,s:3},{id:"szcurls",name:"SZ-Curls",emoji:"〰️",muscle:"Bizeps (klassisch)",note:"SZ-Stange schont die Handgelenke. Ellbogen fixiert.",w:8.0,r:10,s:3},{id:"tricep",name:"Trizeps",emoji:"⚡",muscle:"Trizeps · Oberarm",note:"Ellbogen fixiert, 3 Sek. absenken. Bei Schmerzen abbrechen.",w:5.0,r:12,s:3}];
+const DEFAULTS = EXERCISES.map(e => ({w:e.w,r:e.r,s:e.s}));
+const STORAGE_KEY  = 'mkraft_v2';
+const HISTORY_KEY  = 'mkraft_history_v2';
+const KW_KEY       = 'mkraft_kw_v2';
+const SETTINGS_KEY = 'mkraft_settings_v2';
+const SWIPE_THRESHOLD = 30;
+const STEP_OPTIONS = [0.5,1.0,1.5,2.0,2.5,3.0,5.0];
 
-const DEFAULTS = EXERCISES.map(e => ({w:e.w, r:e.r, s:e.s}));
+let STATE = {step:2.5};
+let HISTORY = {};
+let KW_DATA = [];
 
-const STORAGE_KEY   = 'mkraft_v2';
-const HISTORY_KEY   = 'mkraft_history_v2';
-const KW_KEY        = 'mkraft_kw_v2';
-const SETTINGS_KEY  = 'mkraft_settings_v2';
-
-let STATE = {step: 2.5};
-let HISTORY = {}; // {exId: [{date:'2024-04-01', w:14}]}
-let KW_DATA  = []; // [{date, w}]
-
-// ═══════════════════════════════════════════════
-// STORAGE
-// ═══════════════════════════════════════════════
 function loadAll() {
   try {
     const s = JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');
-    EXERCISES.forEach((ex,i) => {
-      if (typeof s[ex.id]?.w === 'number') ex.w = s[ex.id].w;
-      if (typeof s[ex.id]?.r === 'number') ex.r = s[ex.id].r;
-      if (typeof s[ex.id]?.s === 'number') ex.s = s[ex.id].s;
+    EXERCISES.forEach(ex => {
+      if(s[ex.id]){
+        if(typeof s[ex.id].w==='number') ex.w=s[ex.id].w;
+        if(typeof s[ex.id].r==='number') ex.r=s[ex.id].r;
+        if(typeof s[ex.id].s==='number') ex.s=s[ex.id].s;
+      }
     });
-    const h = JSON.parse(localStorage.getItem(HISTORY_KEY)||'{}');
-    HISTORY = h;
-    const k = JSON.parse(localStorage.getItem(KW_KEY)||'[]');
-    KW_DATA = k;
+    HISTORY = JSON.parse(localStorage.getItem(HISTORY_KEY)||'{}');
+    KW_DATA = JSON.parse(localStorage.getItem(KW_KEY)||'[]');
     const set = JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');
-    if (typeof set.step === 'number') STATE.step = set.step;
-  } catch(e) {}
+    if(typeof set.step==='number') STATE.step=set.step;
+  } catch(e){}
 }
 
-function saveExercises() {
-  const data = {};
-  EXERCISES.forEach(ex => { data[ex.id] = {w:ex.w, r:ex.r, s:ex.s}; });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+function saveExercises(){
+  const d={};
+  EXERCISES.forEach(ex=>{d[ex.id]={w:ex.w,r:ex.r,s:ex.s};});
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(d));
 }
+function saveHistory(){ localStorage.setItem(HISTORY_KEY,JSON.stringify(HISTORY)); }
+function saveKWData(){ localStorage.setItem(KW_KEY,JSON.stringify(KW_DATA)); }
+function saveSettings(){ localStorage.setItem(SETTINGS_KEY,JSON.stringify(STATE)); }
 
-function saveHistory() {
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(HISTORY));
-}
-
-function saveKWData() {
-  localStorage.setItem(KW_KEY, JSON.stringify(KW_DATA));
-}
-
-function saveSettings() {
-  localStorage.setItem(SETTINGS_KEY, JSON.stringify(STATE));
-}
-
-function recordHistory(exId, w) {
-  if (!HISTORY[exId]) HISTORY[exId] = [];
-  const today = todayStr();
-  // Update or add today's entry
-  const idx = HISTORY[exId].findIndex(e => e.date === today);
-  if (idx >= 0) HISTORY[exId][idx].w = w;
-  else HISTORY[exId].push({date: today, w});
-  // Keep only last 30 days
-  const cutoff = daysAgoStr(30);
-  HISTORY[exId] = HISTORY[exId].filter(e => e.date >= cutoff);
+function recordHistory(exId,w){
+  if(!HISTORY[exId]) HISTORY[exId]=[];
+  const today=todayStr();
+  const idx=HISTORY[exId].findIndex(e=>e.date===today);
+  if(idx>=0) HISTORY[exId][idx].w=w;
+  else HISTORY[exId].push({date:today,w});
+  const cutoff=daysAgoStr(30);
+  HISTORY[exId]=HISTORY[exId].filter(e=>e.date>=cutoff);
   saveHistory();
 }
 
-// ═══════════════════════════════════════════════
-// RENDER MAIN
-// ═══════════════════════════════════════════════
-function renderAll() {
-  EXERCISES.forEach((ex, i) => {
-    const el = document.getElementById('ex-val-' + i);
-    if (!el) return;
-    const wStr = Number.isInteger(ex.w * 10) && (ex.w * 10) % 5 === 0
-      ? (Number.isInteger(ex.w) ? ex.w : ex.w.toFixed(1))
-      : ex.w.toFixed(1);
-    el.textContent = wStr + ' / ' + ex.r;
+function renderAll(){
+  EXERCISES.forEach((ex,i)=>{
+    const el=document.getElementById('ex-val-'+i);
+    if(!el) return;
+    const wStr=Number.isInteger(ex.w)?ex.w:ex.w.toFixed(1);
+    el.textContent=wStr+' / '+ex.r;
   });
 }
 
-// ═══════════════════════════════════════════════
-// SWIPE INTERACTION
-// ═══════════════════════════════════════════════
-const SWIPE_THRESHOLD = 30;
-
-function setupTouchTargets() {
-  EXERCISES.forEach((ex, i) => {
-    const el = document.getElementById('wabe-' + i);
-    if (!el) return;
-    attachSwipe(el, i);
+function setupHitAreas(){
+  EXERCISES.forEach((ex,i)=>{
+    const el=document.getElementById('hit-'+i);
+    if(!el) return;
+    let startX=0,lastX=0,moved=false;
+    el.addEventListener('touchstart',e=>{
+      const t=e.touches[0];
+      startX=t.clientX; lastX=t.clientX; moved=false;
+      e.preventDefault();
+    },{passive:false});
+    el.addEventListener('touchmove',e=>{
+      const t=e.touches[0];
+      if(Math.abs(t.clientX-startX)>8) moved=true;
+      const chunk=t.clientX-lastX;
+      if(Math.abs(chunk)>=SWIPE_THRESHOLD){
+        changeWeight(i,chunk>0?STATE.step:-STATE.step);
+        lastX=t.clientX;
+      }
+      e.preventDefault();
+    },{passive:false});
+    el.addEventListener('touchend',e=>{
+      if(!moved) openDetail(i);
+      e.preventDefault();
+    },{passive:false});
   });
-  const menuEl = document.getElementById('wabe-menu');
-  if (menuEl) {
-    let startX=0,startY=0,moved=false;
-    menuEl.addEventListener('touchstart', e => { const t=e.touches[0]; startX=t.clientX; startY=t.clientY; moved=false; e.preventDefault(); }, {passive:false});
-    menuEl.addEventListener('touchmove',  e => { const t=e.touches[0]; if(Math.hypot(t.clientX-startX,t.clientY-startY)>8) moved=true; e.preventDefault(); }, {passive:false});
-    menuEl.addEventListener('touchend',   e => { if(!moved) openScreen('screen-menu'); e.preventDefault(); }, {passive:false});
+
+  const menuEl=document.getElementById('hit-menu');
+  if(menuEl){
+    let startX=0,moved=false;
+    menuEl.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;moved=false;e.preventDefault();},{passive:false});
+    menuEl.addEventListener('touchmove',e=>{if(Math.abs(e.touches[0].clientX-startX)>8)moved=true;e.preventDefault();},{passive:false});
+    menuEl.addEventListener('touchend',e=>{if(!moved)openScreen('screen-menu');e.preventDefault();},{passive:false});
   }
 }
 
-function attachSwipe(el, idx) {
-  let startX=0, startY=0, moved=false, lastFiredX=0;
-
-  el.addEventListener('touchstart', e => {
-    const t = e.touches[0];
-    startX = t.clientX; startY = t.clientY;
-    lastFiredX = t.clientX;
-    moved = false;
-    e.preventDefault();
-  }, {passive:false});
-
-  el.addEventListener('touchmove', e => {
-    const t = e.touches[0];
-    const dx = t.clientX - startX;
-    const dy = t.clientY - startY;
-    if (Math.abs(dx) > 8 || Math.abs(dy) > 8) moved = true;
-    const chunkDx = t.clientX - lastFiredX;
-    if (Math.abs(chunkDx) >= SWIPE_THRESHOLD) {
-      const dir = chunkDx > 0 ? +1 : -1;
-      changeWeight(idx, dir * STATE.step);
-      lastFiredX = t.clientX;
-    }
-    e.preventDefault();
-  }, {passive:false});
-
-  el.addEventListener('touchend', e => {
-    if (!moved) openDetail(idx);
-    e.preventDefault();
-  }, {passive:false});
-}
-
-function changeWeight(idx, delta) {
-  const ex = EXERCISES[idx];
-  ex.w = Math.max(0.5, Math.round((ex.w + delta) * 10) / 10);
+function changeWeight(idx,delta){
+  const ex=EXERCISES[idx];
+  ex.w=Math.max(0.5,Math.round((ex.w+delta)*10)/10);
   renderAll();
-  recordHistory(ex.id, ex.w);
+  recordHistory(ex.id,ex.w);
   saveExercises();
-  // Flash animation
-  const el = document.getElementById('ex-val-' + idx);
-  if (el) {
-    el.style.transition = 'none';
-    el.style.fill = delta > 0 ? '#FFE8A0' : '#9CB0BA';
-    setTimeout(() => { el.style.transition = 'fill .4s'; el.style.fill = ''; }, 50);
-    setTimeout(() => { el.style.transition = ''; }, 450);
+  const el=document.getElementById('ex-val-'+idx);
+  if(el){
+    el.style.transition='none';
+    el.style.fill=delta>0?'#FFE8A0':'#9CB0BA';
+    setTimeout(()=>{el.style.transition='fill .4s';el.style.fill='';},50);
+    setTimeout(()=>{el.style.transition='';},450);
   }
 }
 
-// ═══════════════════════════════════════════════
-// DETAIL SCREEN
-// ═══════════════════════════════════════════════
-let detIdx = 0;
-
-function openDetail(idx) {
-  detIdx = idx;
-  const ex = EXERCISES[idx];
-  document.getElementById('det-title').textContent = ex.name;
-  document.getElementById('det-emoji').textContent = ex.emoji;
-  document.getElementById('det-name').textContent = ex.name;
-  document.getElementById('det-muscle').textContent = ex.muscle;
-  document.getElementById('det-note').innerHTML = '<span class="note-icon">💡</span>' + ex.note;
+let detIdx=0;
+function openDetail(idx){
+  detIdx=idx;
+  const ex=EXERCISES[idx];
+  document.getElementById('det-title').textContent=ex.name;
+  document.getElementById('det-emoji').textContent=ex.emoji;
+  document.getElementById('det-name').textContent=ex.name;
+  document.getElementById('det-muscle').textContent=ex.muscle;
+  document.getElementById('det-note').innerHTML='<span style="margin-right:6px">💡</span>'+ex.note;
   renderDetailVals();
   renderChart(ex);
   openScreen('screen-detail');
 }
 
-function renderDetailVals() {
-  const ex = EXERCISES[detIdx];
-  const wStr = Number.isInteger(ex.w) ? ex.w : ex.w.toFixed(1);
-  document.getElementById('det-w').textContent = wStr;
-  document.getElementById('det-r').textContent = ex.r;
-  document.getElementById('det-s').textContent = ex.s;
+function renderDetailVals(){
+  const ex=EXERCISES[detIdx];
+  document.getElementById('det-w').textContent=Number.isInteger(ex.w)?ex.w:ex.w.toFixed(1);
+  document.getElementById('det-r').textContent=ex.r;
+  document.getElementById('det-s').textContent=ex.s;
 }
 
-function detAdjust(field, dir) {
-  const ex = EXERCISES[detIdx];
-  if (field === 'w') {
-    ex.w = Math.max(0.5, Math.round((ex.w + dir * STATE.step) * 10) / 10);
-    recordHistory(ex.id, ex.w);
-  } else if (field === 'r') {
-    ex.r = Math.max(1, ex.r + dir);
-  } else if (field === 's') {
-    ex.s = Math.max(1, ex.s + dir);
-  }
-  renderDetailVals();
-  renderAll();
-  saveExercises();
-  if (field === 'w') renderChart(ex);
+function detAdjust(field,dir){
+  const ex=EXERCISES[detIdx];
+  if(field==='w'){ex.w=Math.max(0.5,Math.round((ex.w+dir*STATE.step)*10)/10);recordHistory(ex.id,ex.w);}
+  else if(field==='r') ex.r=Math.max(1,ex.r+dir);
+  else if(field==='s') ex.s=Math.max(1,ex.s+dir);
+  renderDetailVals();renderAll();saveExercises();
+  if(field==='w') renderChart(ex);
 }
 
-function renderChart(ex) {
-  const container = document.getElementById('det-chart');
-  const history = HISTORY[ex.id] || [];
-  const today = todayStr();
-  const weeks = [];
-  for (let i = 3; i >= 0; i--) {
-    const start = daysAgoStr(i * 7 + 6);
-    const end   = daysAgoStr(i * 7);
-    const entries = history.filter(e => e.date >= start && e.date <= end);
-    const avg = entries.length ? entries[entries.length-1].w : null;
-    weeks.push({label: i === 0 ? 'Heute' : '-' + (i) + 'W', val: avg, isCurrent: i === 0});
+function renderChart(ex){
+  const container=document.getElementById('det-chart');
+  const history=HISTORY[ex.id]||[];
+  const weeks=[];
+  for(let i=3;i>=0;i--){
+    const start=daysAgoStr(i*7+6);
+    const end=daysAgoStr(i*7);
+    const entries=history.filter(e=>e.date>=start&&e.date<=end);
+    const val=entries.length?entries[entries.length-1].w:null;
+    weeks.push({label:i===0?'Jetzt':'-'+i+'W',val,isCurrent:i===0});
   }
-  const vals = weeks.map(w => w.val).filter(v => v !== null);
-  if (vals.length === 0) {
-    container.innerHTML = '<div class="no-history">Noch keine Verlaufsdaten</div>';
-    return;
-  }
-  const maxV = Math.max(...vals);
-  const minV = Math.min(...vals);
-  const range = maxV - minV || 1;
-  container.innerHTML = weeks.map(w => {
-    if (w.val === null) return `<div class="chart-bar-wrap"><div class="chart-val" style="color:var(--petrol-mid)">–</div><div class="chart-bar" style="height:4px;background:var(--surface3)"></div><div class="chart-lbl">\${w.label}</div></div>`;
-    const pct = 20 + ((w.val - minV) / range) * 60;
-    return `<div class="chart-bar-wrap"><div class="chart-val">\${w.val}</div><div class="chart-bar\${w.isCurrent?' current':''}" style="height:\${pct}px"></div><div class="chart-lbl">\${w.label}</div></div>`;
+  const vals=weeks.map(w=>w.val).filter(v=>v!==null);
+  if(!vals.length){container.innerHTML='<div class="no-history">Noch keine Verlaufsdaten</div>';return;}
+  const maxV=Math.max(...vals),minV=Math.min(...vals),range=maxV-minV||1;
+  container.innerHTML=weeks.map(w=>{
+    if(w.val===null) return '<div class="chart-bar-wrap"><div class="chart-val" style="color:var(--petrol-mid)">–</div><div class="chart-bar" style="height:4px;background:var(--surface3)"></div><div class="chart-lbl">'+w.label+'</div></div>';
+    const pct=20+((w.val-minV)/range)*60;
+    return '<div class="chart-bar-wrap"><div class="chart-val">'+w.val+'</div><div class="chart-bar'+(w.isCurrent?' current':'')+'" style="height:'+pct+'px"></div><div class="chart-lbl">'+w.label+'</div></div>';
   }).join('');
 }
 
-// ═══════════════════════════════════════════════
-// KÖRPERGEWICHT
-// ═══════════════════════════════════════════════
-function saveKW() {
-  const val = parseFloat(document.getElementById('kw-input').value);
-  if (isNaN(val) || val < 30 || val > 300) { showToast('Ungültiger Wert'); return; }
-  const today = todayStr();
-  const idx = KW_DATA.findIndex(e => e.date === today);
-  if (idx >= 0) KW_DATA[idx].w = val;
-  else KW_DATA.push({date: today, w: val});
-  KW_DATA.sort((a,b) => b.date.localeCompare(a.date));
+function saveKW(){
+  const val=parseFloat(document.getElementById('kw-input').value);
+  if(isNaN(val)||val<30||val>300){showToast('Ungültiger Wert');return;}
+  const today=todayStr();
+  const idx=KW_DATA.findIndex(e=>e.date===today);
+  if(idx>=0) KW_DATA[idx].w=val;
+  else KW_DATA.push({date:today,w:val});
+  KW_DATA.sort((a,b)=>b.date.localeCompare(a.date));
   saveKWData();
-  document.getElementById('kw-input').value = '';
+  document.getElementById('kw-input').value='';
   renderKWList();
   showToast('Gespeichert ✓');
 }
 
-function renderKWList() {
-  const el = document.getElementById('kw-list');
-  if (!KW_DATA.length) { el.innerHTML = '<div class="no-history">Noch keine Einträge</div>'; return; }
-  el.innerHTML = KW_DATA.slice(0,20).map(e =>
-    `<div class="kw-entry"><span class="kw-date">\${formatDate(e.date)}</span><span class="kw-val">\${e.w} kg</span></div>`
-  ).join('');
+function renderKWList(){
+  const el=document.getElementById('kw-list');
+  if(!KW_DATA.length){el.innerHTML='<div class="no-history">Noch keine Einträge</div>';return;}
+  el.innerHTML=KW_DATA.slice(0,20).map(e=>'<div class="kw-entry"><span class="kw-date">'+formatDate(e.date)+'</span><span class="kw-val">'+e.w+' kg</span></div>').join('');
 }
 
-// ═══════════════════════════════════════════════
-// SETTINGS
-// ═══════════════════════════════════════════════
-const STEP_OPTIONS = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 5.0];
-
-function adjustStep(dir) {
-  const idx = STEP_OPTIONS.indexOf(STATE.step);
-  const newIdx = Math.max(0, Math.min(STEP_OPTIONS.length-1, idx + dir));
-  STATE.step = STEP_OPTIONS[newIdx];
-  document.getElementById('step-display').textContent = STATE.step + ' kg';
+function adjustStep(dir){
+  const idx=STEP_OPTIONS.indexOf(STATE.step);
+  STATE.step=STEP_OPTIONS[Math.max(0,Math.min(STEP_OPTIONS.length-1,idx+dir))];
+  document.getElementById('step-display').textContent=STATE.step+' kg';
   saveSettings();
 }
 
-// ═══════════════════════════════════════════════
-// EXPORT / IMPORT
-// ═══════════════════════════════════════════════
-function exportJSON() {
-  const data = {
-    version: 2,
-    exported: new Date().toISOString(),
-    exercises: {},
-    history: HISTORY,
-    kw: KW_DATA,
-    settings: STATE,
-  };
-  EXERCISES.forEach(ex => { data.exercises[ex.id] = {w:ex.w, r:ex.r, s:ex.s}; });
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'mkraft_backup_' + todayStr() + '.json';
-  a.click(); URL.revokeObjectURL(url);
+function exportJSON(){
+  const data={version:2,exported:new Date().toISOString(),exercises:{},history:HISTORY,kw:KW_DATA,settings:STATE};
+  EXERCISES.forEach(ex=>{data.exercises[ex.id]={w:ex.w,r:ex.r,s:ex.s};});
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='mkraft_backup_'+todayStr()+'.json';a.click();URL.revokeObjectURL(url);
   showToast('Export erfolgreich ✓');
 }
 
-function importJSON() {
-  document.getElementById('import-file').click();
-}
+function importJSON(){ document.getElementById('import-file').click(); }
 
-function handleImport(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      if (data.exercises) {
-        EXERCISES.forEach(ex => {
-          if (data.exercises[ex.id]) {
-            if (typeof data.exercises[ex.id].w === 'number') ex.w = data.exercises[ex.id].w;
-            if (typeof data.exercises[ex.id].r === 'number') ex.r = data.exercises[ex.id].r;
-            if (typeof data.exercises[ex.id].s === 'number') ex.s = data.exercises[ex.id].s;
-          }
-        });
-        saveExercises();
-      }
-      if (data.history) { HISTORY = data.history; saveHistory(); }
-      if (data.kw)      { KW_DATA = data.kw;      saveKWData(); }
-      if (data.settings?.step) { STATE.step = data.settings.step; saveSettings(); }
-      renderAll();
-      showToast('Import erfolgreich ✓');
-    } catch(err) { showToast('Fehler beim Import'); }
-    e.target.value = '';
+function handleImport(e){
+  const file=e.target.files[0];if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(data.exercises) EXERCISES.forEach(ex=>{if(data.exercises[ex.id]){if(typeof data.exercises[ex.id].w==='number')ex.w=data.exercises[ex.id].w;if(typeof data.exercises[ex.id].r==='number')ex.r=data.exercises[ex.id].r;if(typeof data.exercises[ex.id].s==='number')ex.s=data.exercises[ex.id].s;}});
+      if(data.history){HISTORY=data.history;saveHistory();}
+      if(data.kw){KW_DATA=data.kw;saveKWData();}
+      if(data.settings?.step){STATE.step=data.settings.step;saveSettings();}
+      saveExercises();renderAll();showToast('Import erfolgreich ✓');
+    }catch(err){showToast('Fehler beim Import');}
+    e.target.value='';
   };
   reader.readAsText(file);
 }
 
-// ═══════════════════════════════════════════════
-// CONFIRM / RESET / DELETE
-// ═══════════════════════════════════════════════
-let pendingAction = null;
-
-function confirmAction(action, title, msg) {
-  pendingAction = action;
-  document.getElementById('confirm-title').textContent = title;
-  document.getElementById('confirm-msg').textContent = msg;
+let pendingAction=null;
+function confirmAction(action,title,msg){
+  pendingAction=action;
+  document.getElementById('confirm-title').textContent=title;
+  document.getElementById('confirm-msg').textContent=msg;
   document.getElementById('confirm-backdrop').classList.add('visible');
 }
-
-function closeConfirm() {
-  document.getElementById('confirm-backdrop').classList.remove('visible');
-  pendingAction = null;
-}
-
-function executeConfirm() {
-  if (pendingAction === 'reset-prog') {
-    EXERCISES.forEach((ex,i) => { ex.w = DEFAULTS[i].w; ex.r = DEFAULTS[i].r; ex.s = DEFAULTS[i].s; });
-    saveExercises(); renderAll(); showToast('Progression zurückgesetzt');
-  } else if (pendingAction === 'delete-all') {
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(HISTORY_KEY);
-    localStorage.removeItem(KW_KEY);
-    localStorage.removeItem(SETTINGS_KEY);
-    HISTORY = {}; KW_DATA = [];
-    EXERCISES.forEach((ex,i) => { ex.w=DEFAULTS[i].w; ex.r=DEFAULTS[i].r; ex.s=DEFAULTS[i].s; });
-    STATE.step = 2.5;
-    renderAll(); showToast('Alle Daten gelöscht');
+function closeConfirm(){ document.getElementById('confirm-backdrop').classList.remove('visible');pendingAction=null; }
+function executeConfirm(){
+  if(pendingAction==='reset-prog'){
+    EXERCISES.forEach((ex,i)=>{ex.w=DEFAULTS[i].w;ex.r=DEFAULTS[i].r;ex.s=DEFAULTS[i].s;});
+    saveExercises();renderAll();showToast('Progression zurückgesetzt');
+  }else if(pendingAction==='delete-all'){
+    [STORAGE_KEY,HISTORY_KEY,KW_KEY,SETTINGS_KEY].forEach(k=>localStorage.removeItem(k));
+    HISTORY={};KW_DATA=[];
+    EXERCISES.forEach((ex,i)=>{ex.w=DEFAULTS[i].w;ex.r=DEFAULTS[i].r;ex.s=DEFAULTS[i].s;});
+    STATE.step=2.5;renderAll();showToast('Alle Daten gelöscht');
   }
   closeConfirm();
 }
 
-// ═══════════════════════════════════════════════
-// SCREENS
-// ═══════════════════════════════════════════════
-function openScreen(id) {
-  document.getElementById(id).classList.add('open');
-  if (id === 'screen-menu') {
-    document.getElementById('step-display').textContent = STATE.step + ' kg';
-  }
-}
+function openScreen(id){ document.getElementById(id).classList.add('open'); if(id==='screen-menu') document.getElementById('step-display').textContent=STATE.step+' kg'; }
+function closeScreen(id){ document.getElementById(id).classList.remove('open'); document.querySelectorAll('.subscreen.open').forEach(s=>s.classList.remove('open')); }
+function openSub(id){ document.getElementById(id).classList.add('open'); if(id==='sub-kw') renderKWList(); }
+function closeSub(id){ document.getElementById(id).classList.remove('open'); }
 
-function closeScreen(id) {
-  document.getElementById(id).classList.remove('open');
-  // Close any open subscreens too
-  document.querySelectorAll('.subscreen.open').forEach(s => s.classList.remove('open'));
-}
+let toastTimer=null;
+function showToast(msg){ const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200); }
 
-function openSub(id) {
-  document.getElementById(id).classList.add('open');
-  if (id === 'sub-kw') renderKWList();
-}
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function daysAgoStr(n){ const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10); }
+function formatDate(str){ const [y,m,d]=str.split('-');return d+'.'+m+'.'+y; }
 
-function closeSub(id) {
-  document.getElementById(id).classList.remove('open');
-}
-
-// ═══════════════════════════════════════════════
-// TOAST
-// ═══════════════════════════════════════════════
-let toastTimer = null;
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
-}
-
-// ═══════════════════════════════════════════════
-// DATE HELPERS
-// ═══════════════════════════════════════════════
-function todayStr() {
-  const d = new Date();
-  return d.toISOString().slice(0,10);
-}
-function daysAgoStr(n) {
-  const d = new Date(); d.setDate(d.getDate()-n);
-  return d.toISOString().slice(0,10);
-}
-function formatDate(str) {
-  const [y,m,d] = str.split('-');
-  return d + '.' + m + '.' + y;
-}
-
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
 loadAll();
 renderAll();
-setupTouchTargets();
+setupHitAreas();
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
-
-
+if('serviceWorker' in navigator){ navigator.serviceWorker.register('sw.js').catch(()=>{}); }
 </script>
 </body>
 </html>
