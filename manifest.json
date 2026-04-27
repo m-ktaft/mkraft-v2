@@ -2,7 +2,7 @@
   "name": "mkraft",
   "short_name": "mkraft",
   "description": "Trainings-Spickzettel für Krafttraining",
-  "start_url": "./index.html",
+  "start_url": "./app.html",
   "display": "standalone",
   "background_color": "#1e2d31",
   "theme_color": "#324A52",
