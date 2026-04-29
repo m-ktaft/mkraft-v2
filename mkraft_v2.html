@@ -232,7 +232,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 
 /* Section label */
 .sub-sl{
-  font-size:13px;font-weight:700;color:rgba(110,136,150,0.8);
+  font-size:13px;font-weight:700;color:#E0EAF0;
   letter-spacing:.14em;text-transform:uppercase;
   margin:20px 0 10px;
   display:flex;align-items:center;gap:10px;
@@ -243,7 +243,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 /* Val tiles in detail */
 .sub-val-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px;width:100%;box-sizing:border-box;overflow:hidden}
 .sub-val-tile{background:#4A6970;border-radius:12px;padding:12px 6px;text-align:center}
-.sub-val-label{font-size:12px;font-weight:700;color:#9CB0BA;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sub-val-label{font-size:13px;font-weight:700;color:#9CB0BA;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
 .sub-val-ctrl{display:flex;align-items:center;justify-content:center;gap:8px}
 .sub-val-btn{
   width:30px;height:30px;border-radius:50%;
@@ -254,7 +254,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   font-family:Inter,sans-serif;line-height:1;
 }
 .sub-val-btn:active{background:rgba(245,192,74,0.15)}
-.sub-val-num{font-size:18px;font-weight:700;color:#F5F4EE;min-width:36px;text-align:center}
+.sub-val-num{font-size:20px;font-weight:700;color:#E0EAF0;min-width:36px;text-align:center}
 
 /* Chart in detail */
 .sub-chart-area{height:80px;display:flex;align-items:flex-end;gap:4px;margin-top:8px}
@@ -299,13 +299,13 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 /* Prinzipien */
 .sub-prinzip{background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px}
 .sub-prinzip-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.sub-prinzip-title{font-size:13px;font-weight:700;color:#F5C04A}
+.sub-prinzip-title{font-size:15px;font-weight:700;color:#F5C04A}
 .sub-prinzip-text{font-size:14px;color:#F5F4EE;line-height:1.5}
 .sub-prinzip-detail{font-size:13px;color:rgba(224,234,240,0.7);margin-top:4px;line-height:1.5}
 
 /* Alternativen */
 .sub-alt{background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px}
-.sub-alt-label{font-size:13px;font-weight:700;color:#F5C04A;margin-bottom:6px}
+.sub-alt-label{font-size:15px;font-weight:700;color:#F5C04A;margin-bottom:6px}
 .sub-alt-row{font-size:14px;color:#F5F4EE;line-height:1.7}
 .sub-alt-key{color:rgba(224,234,240,0.7);font-weight:600}
 
@@ -315,7 +315,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px;
 }
 .sub-setting-label{font-size:15px;font-weight:600;color:#F5F4EE}
-.sub-setting-sub{font-size:13px;color:rgba(224,234,240,0.7);margin-top:2px}
+.sub-setting-sub{font-size:14px;color:rgba(224,234,240,0.7);margin-top:2px}
 .sub-step-ctrl{display:flex;align-items:center;gap:8px}
 .sub-step-btn{
   width:32px;height:32px;border-radius:50%;
@@ -327,13 +327,13 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 .sub-danger-btn{
   width:100%;padding:14px;border-radius:12px;
   border:1px solid rgba(255,85,85,0.4);background:rgba(255,85,85,0.1);
-  color:#ff6666;font-size:13px;font-weight:600;cursor:pointer;
+  color:#ff6666;font-size:15px;font-weight:600;cursor:pointer;
   font-family:Inter,sans-serif;margin-bottom:8px;text-align:left;
 }
 .sub-action-btn{
   width:100%;padding:14px;border-radius:12px;
   border:none;background:#4A6970;
-  color:#E0EAF0;font-size:14px;font-weight:600;cursor:pointer;
+  color:#E0EAF0;font-size:15px;font-weight:600;cursor:pointer;
   font-family:Inter,sans-serif;margin-bottom:8px;text-align:left;
 }
 </style>
@@ -3055,30 +3055,30 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 <polygon points="382.1,577.0 342.6,645.5 263.4,645.5 223.9,577.0 263.4,508.5 342.6,508.5" fill="none" stroke="#FFE8A0" style="pointer-events:none" stroke-width="1" stroke-opacity=".7"/>
 <polygon points="189.1,802.0 149.6,870.5 70.4,870.5 30.9,802.0 70.4,733.5 149.6,733.5" fill="none" stroke="#FFE8A0" style="pointer-events:none" stroke-width="1" stroke-opacity=".7"/>
 <polygon points="382.1,788.0 342.6,856.5 263.4,856.5 223.9,788.0 263.4,719.5 342.6,719.5" fill="none" stroke="#FFE8A0" style="pointer-events:none" stroke-width="1" stroke-opacity=".7"/>
-<text id="ex-weight-0" x="110" y="83" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">14</text>
-<text id="ex-name-0" x="110" y="118" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">Goblet Squat</text>
-<text id="ex-val-0" x="110" y="157" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">8</text>
-<text id="ex-weight-1" x="303" y="97" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">18</text>
-<text id="ex-name-1" x="303" y="132" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">RO Deadlift</text>
-<text id="ex-val-1" x="303" y="171" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">8</text>
-<text id="ex-weight-2" x="110" y="322" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">10</text>
-<text id="ex-name-2" x="110" y="357" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">Bankdrücken</text>
-<text id="ex-val-2" x="110" y="396" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">8</text>
-<text id="ex-weight-3" x="310" y="308" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">12</text>
-<text id="ex-name-3" x="310" y="343" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">Rudern</text>
-<text id="ex-val-3" x="310" y="382" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">8</text>
-<text id="ex-weight-4" x="110" y="533" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">16</text>
-<text id="ex-name-4" x="110" y="568" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">Glute Bridge</text>
-<text id="ex-val-4" x="110" y="607" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">8</text>
-<text id="ex-weight-5" x="303" y="547" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">6</text>
-<text id="ex-name-5" x="303" y="582" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">Seitheben</text>
-<text id="ex-val-5" x="303" y="621" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">12</text>
-<text id="ex-weight-6" x="110" y="772" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">8</text>
-<text id="ex-name-6" x="110" y="807" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">SZ-Curls</text>
-<text id="ex-val-6" x="110" y="846" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">10</text>
-<text id="ex-weight-7" x="303" y="758" text-anchor="middle" font-size="22" font-weight="700" fill="#C8D8E4">5</text>
-<text id="ex-name-7" x="303" y="793" text-anchor="middle" font-size="17" font-weight="700" fill="#F5C04A" letter-spacing=".3">Trizeps</text>
-<text id="ex-val-7" x="303" y="832" text-anchor="middle" font-size="22" font-weight="600" fill="#C8D8E4">12</text>
+<text id="ex-weight-0" x="110" y="83" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">14</text>
+<text id="ex-name-0" x="110" y="118" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">Goblet Squat</text>
+<text id="ex-val-0" x="110" y="157" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">8</text>
+<text id="ex-weight-1" x="303" y="97" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">18</text>
+<text id="ex-name-1" x="303" y="132" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">RO Deadlift</text>
+<text id="ex-val-1" x="303" y="171" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">8</text>
+<text id="ex-weight-2" x="110" y="322" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">10</text>
+<text id="ex-name-2" x="110" y="357" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">Bankdrücken</text>
+<text id="ex-val-2" x="110" y="396" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">8</text>
+<text id="ex-weight-3" x="310" y="308" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">12</text>
+<text id="ex-name-3" x="310" y="343" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">Rudern</text>
+<text id="ex-val-3" x="310" y="382" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">8</text>
+<text id="ex-weight-4" x="110" y="533" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">16</text>
+<text id="ex-name-4" x="110" y="568" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">Glute Bridge</text>
+<text id="ex-val-4" x="110" y="607" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">8</text>
+<text id="ex-weight-5" x="303" y="547" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">6</text>
+<text id="ex-name-5" x="303" y="582" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">Seitheben</text>
+<text id="ex-val-5" x="303" y="621" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">12</text>
+<text id="ex-weight-6" x="110" y="772" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">8</text>
+<text id="ex-name-6" x="110" y="807" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">SZ-Curls</text>
+<text id="ex-val-6" x="110" y="846" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">10</text>
+<text id="ex-weight-7" x="303" y="758" text-anchor="middle" font-size="22" font-weight="700" fill="#F5C04A">5</text>
+<text id="ex-name-7" x="303" y="793" text-anchor="middle" font-size="17" font-weight="700" fill="#C8D8E4" letter-spacing=".3">Trizeps</text>
+<text id="ex-val-7" x="303" y="832" text-anchor="middle" font-size="22" font-weight="600" fill="#F5C04A">12</text>
 
 <!-- Touch targets -->
 </svg>
