@@ -201,10 +201,10 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   position:sticky;top:0;z-index:10;
 }
 .sub-back{
-  width:44px;height:44px;border-radius:50%;
+  width:48px;height:48px;border-radius:50%;
   border:2px solid #F5C04A;
   background:#F5C04A;
-  color:#1a1200;font-size:24px;font-weight:900;letter-spacing:-1px;
+  color:#1a1200;
   cursor:pointer;display:flex;align-items:center;justify-content:center;
   font-family:Inter,sans-serif;flex-shrink:0;
 }
@@ -227,12 +227,12 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   margin-bottom:8px;
 }
 .sc-title{font-size:16px;font-weight:700;color:#F5F4EE;margin-bottom:6px}
-.sc-body{font-size:13px;color:#F5F4EE;line-height:1.6}
+.sc-body{font-size:14px;color:#F5F4EE;line-height:1.6}
 .sc-muscle{font-size:11px;color:#9CB0BA;margin-bottom:12px}
 
 /* Section label */
 .sub-sl{
-  font-size:10px;font-weight:700;color:rgba(110,136,150,0.8);
+  font-size:13px;font-weight:700;color:rgba(110,136,150,0.8);
   letter-spacing:.14em;text-transform:uppercase;
   margin:20px 0 10px;
   display:flex;align-items:center;gap:10px;
@@ -243,7 +243,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 /* Val tiles in detail */
 .sub-val-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px;width:100%;box-sizing:border-box;overflow:hidden}
 .sub-val-tile{background:#4A6970;border-radius:12px;padding:12px 6px;text-align:center}
-.sub-val-label{font-size:9px;font-weight:700;color:#9CB0BA;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sub-val-label{font-size:12px;font-weight:700;color:#9CB0BA;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
 .sub-val-ctrl{display:flex;align-items:center;justify-content:center;gap:8px}
 .sub-val-btn{
   width:30px;height:30px;border-radius:50%;
@@ -287,26 +287,26 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   font-size:13px;color:#F5F4EE;
 }
 .sub-kw-entry:last-child{border-bottom:none}
-.sub-kw-date{color:#9CB0BA;font-size:11px}
+.sub-kw-date{color:#9CB0BA;font-size:14px}
 .sub-kw-val{font-weight:700;color:#F5C04A}
 
 /* Goals grid */
 .sub-goals-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
 .sub-goal-card{background:#4A6970;border-radius:12px;padding:12px 10px}
-.sub-goal-title{font-size:14px;font-weight:700;color:#F5C04A;margin-bottom:4px}
-.sub-goal-desc{font-size:11px;color:#F5F4EE;line-height:1.5}
+.sub-goal-title{font-size:15px;font-weight:700;color:#F5C04A;margin-bottom:4px}
+.sub-goal-desc{font-size:14px;color:#F5F4EE;line-height:1.5}
 
 /* Prinzipien */
 .sub-prinzip{background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px}
 .sub-prinzip-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .sub-prinzip-title{font-size:13px;font-weight:700;color:#F5C04A}
-.sub-prinzip-text{font-size:12px;color:#F5F4EE;line-height:1.5}
+.sub-prinzip-text{font-size:14px;color:#F5F4EE;line-height:1.5}
 .sub-prinzip-detail{font-size:13px;color:rgba(224,234,240,0.7);margin-top:4px;line-height:1.5}
 
 /* Alternativen */
 .sub-alt{background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px}
 .sub-alt-label{font-size:13px;font-weight:700;color:#F5C04A;margin-bottom:6px}
-.sub-alt-row{font-size:11px;color:#F5F4EE;line-height:1.7}
+.sub-alt-row{font-size:14px;color:#F5F4EE;line-height:1.7}
 .sub-alt-key{color:rgba(224,234,240,0.7);font-weight:600}
 
 /* Settings */
@@ -314,7 +314,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   display:flex;justify-content:space-between;align-items:center;
   background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px;
 }
-.sub-setting-label{font-size:13px;font-weight:600;color:#F5F4EE}
+.sub-setting-label{font-size:15px;font-weight:600;color:#F5F4EE}
 .sub-setting-sub{font-size:13px;color:rgba(224,234,240,0.7);margin-top:2px}
 .sub-step-ctrl{display:flex;align-items:center;gap:8px}
 .sub-step-btn{
@@ -3100,7 +3100,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 <!-- DETAIL SCREEN -->
 <div class="screen" id="screen-detail" style="background:linear-gradient(to bottom,#9CB0BA,#C8D8DF)">
   <div class="sub-header">
-    <button class="sub-back" onclick="closeScreen('screen-detail')">←</button>
+    <button class="sub-back" onclick="closeScreen('screen-detail')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1200" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="sub-title" id="det-title">Übung</div>
   </div>
   <div class="sub-body">
@@ -3144,7 +3144,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 <!-- MENU SCREEN -->
 <div class="screen" id="screen-menu" style="background:linear-gradient(to bottom,#9CB0BA,#C8D8DF)">
   <div class="sub-header">
-    <button class="sub-back" onclick="closeScreen('screen-menu')">←</button>
+    <button class="sub-back" onclick="closeScreen('screen-menu')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1200" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="sub-title">Menü</div>
   </div>
   <div class="sub-body">
@@ -3334,9 +3334,7 @@ function openDetail(idx){
   const ex=EXERCISES[idx];
   document.getElementById('det-title').textContent=ex.name;
   document.getElementById('det-muscle').textContent=ex.muscle;
-  const sentences=ex.note.split(/(?<=\.)\s+/);
-  const noteHtml=sentences.map(s=>'<div style="margin-bottom:6px">'+s+'</div>').join('');
-  document.getElementById('det-note').innerHTML=noteHtml;
+  document.getElementById('det-note').textContent=ex.note;
   renderDetailVals();
   renderChart(ex);
   openScreen('screen-detail');
@@ -3385,14 +3383,14 @@ function renderChart(ex){
     const dotBorder=isLast?'#F5C04A':'rgba(224,234,240,0.6)';
     const dotSize=isLast?8:5;
     const wColor=isLast?'#F5C04A':'#E0EAF0';
-    const wSize=isLast?15:13;
+    const wSize=isLast?17:15;
     const wWeight=isLast?'700':'500';
-    const label=isLast?'<span style="font-size:9px;font-weight:700;color:#F5C04A;margin-left:6px">JETZT</span>':'';
+    const label=isLast?'<span style="font-size:12px;font-weight:700;color:#F5C04A;margin-left:6px">JETZT</span>':'';
     html+=`<div style="display:flex;align-items:center;gap:12px;padding:7px 0;position:relative">
       <div style="width:${dotSize*2}px;height:${dotSize*2}px;border-radius:50%;background:${dotColor};border:2px solid ${dotBorder};flex-shrink:0;position:relative;z-index:1;margin-left:${isLast?0:2}px"></div>
-      <span style="font-size:11px;color:rgba(224,234,240,0.6);min-width:42px">${formatDate(entry.date)}</span>
+      <span style="font-size:13px;color:rgba(224,234,240,0.6);min-width:48px">${formatDate(entry.date)}</span>
       <span style="font-size:${wSize}px;font-weight:${wWeight};color:${wColor}">${entry.w} kg</span>
-      ${diff?`<span style="font-size:11px;color:${diffColor}">${diff}</span>`:''}
+      ${diff?`<span style="font-size:13px;color:${diffColor}">${diff}</span>`:''}
       ${label}
     </div>`;
   });
