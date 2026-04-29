@@ -119,8 +119,8 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 .menu-chevron{color:var(--petrol-mid);font-size:14px}
 
 /* Subscreen */
-.subscreen{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;background:var(--petrol-dark);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow:hidden;}
-.subscreen.open{transform:translateX(0)}
+
+
 
 /* KW */
 .kw-input-row{display:flex;gap:10px;margin-bottom:16px}
@@ -2945,12 +2945,15 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
     <div class="scr-title" id="det-title">Übung</div>
   </div>
   <div class="scr-body">
-    <div class="detail-hero">
-      <div class="detail-emoji" id="det-emoji">🏋️</div>
-      <div class="detail-name" id="det-name">–</div>
-      <div class="detail-muscle" id="det-muscle">–</div>
+
+    <!-- Muskel & Hinweis -->
+    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:16px;padding:16px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:var(--petrol-mid);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px" id="det-muscle">–</div>
+      <div style="font-size:13px;color:var(--text-light);line-height:1.6" id="det-note"></div>
     </div>
-    <div class="val-row">
+
+    <!-- Werte: Gewicht / Wdh / Sätze -->
+    <div class="val-row" style="margin-bottom:14px">
       <div class="val-tile">
         <div class="val-tile-label">Gewicht kg</div>
         <div class="val-tile-ctrl">
@@ -2976,11 +2979,13 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
         </div>
       </div>
     </div>
+
+    <!-- Verlauf -->
     <div class="history-wrap">
       <div class="history-title">Gewicht · letzte 4 Wochen</div>
       <div class="chart-area" id="det-chart"></div>
     </div>
-    <div class="note-box" id="det-note"></div>
+
   </div>
 </div>
 
@@ -2991,67 +2996,48 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
     <div class="scr-title">Menü</div>
   </div>
   <div class="scr-body">
-    <div class="menu-item" onclick="openSub('sub-kw')"><div class="menu-icon">⚖️</div><div class="menu-label">Körpergewicht</div><div class="menu-chevron">›</div></div>
-    <div class="menu-item" onclick="openSub('sub-ziele')"><div class="menu-icon">🎯</div><div class="menu-label">Meine Ziele</div><div class="menu-chevron">›</div></div>
-    <div class="menu-item" onclick="openSub('sub-prinzip')"><div class="menu-icon">📋</div><div class="menu-label">Grundprinzipien</div><div class="menu-chevron">›</div></div>
-    <div class="menu-item" onclick="openSub('sub-alt')"><div class="menu-icon">🩹</div><div class="menu-label">Alternativen bei Beschwerden</div><div class="menu-chevron">›</div></div>
-    <div class="menu-item" onclick="exportJSON()"><div class="menu-icon">↓</div><div class="menu-label">Export JSON</div><div class="menu-chevron">›</div></div>
-    <div class="menu-item" onclick="importJSON()"><div class="menu-icon">↑</div><div class="menu-label">Import JSON</div><div class="menu-chevron">›</div></div>
-    <div class="menu-item" onclick="openSub('sub-settings')"><div class="menu-icon">⚙️</div><div class="menu-label">Einstellungen</div><div class="menu-chevron">›</div></div>
-    <div class="menu-item" onclick="openSub('sub-about')"><div class="menu-icon">ℹ️</div><div class="menu-label">Über die App</div><div class="menu-chevron">›</div></div>
-  </div>
-</div>
 
-<!-- SUBSCREENS -->
-<div class="subscreen" id="sub-kw">
-  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-kw')">←</button><div class="scr-title">Körpergewicht</div></div>
-  <div class="scr-body">
-    <div class="sl">Eintragen</div>
-    <div class="kw-input-row"><input class="kw-input" id="kw-input" type="number" step="0.1" min="30" max="300" placeholder="kg"><button class="kw-save-btn" onclick="saveKW()">Speichern</button></div>
-    <div class="sl">Verlauf</div>
+    <!-- Körpergewicht -->
+    <div class="sl">⚖️ Körpergewicht</div>
+    <div class="kw-input-row">
+      <input class="kw-input" id="kw-input" type="number" step="0.1" min="30" max="300" placeholder="kg">
+      <button class="kw-save-btn" onclick="saveKW()">Speichern</button>
+    </div>
     <div id="kw-list"></div>
-  </div>
-</div>
 
-<div class="subscreen" id="sub-ziele">
-  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-ziele')">←</button><div class="scr-title">Meine Ziele</div></div>
-  <div class="scr-body">
+    <!-- Meine Ziele -->
+    <div class="sl">🎯 Meine Ziele</div>
     <div class="goals-grid">
       <div class="goal-card"><div class="goal-title">Stoffwechsel</div><div class="goal-desc">Krafttraining aktiviert den Stoffwechsel dauerhaft — auch in Ruhephasen</div></div>
       <div class="goal-card"><div class="goal-title">Insulinsensitivität</div><div class="goal-desc">Muskelarbeit verbessert die Glukoseverwertung direkt</div></div>
       <div class="goal-card"><div class="goal-title">Longevity</div><div class="goal-desc">Langfristige Gesundheit — Konstanz schlägt Intensität</div></div>
       <div class="goal-card"><div class="goal-title">Gelenkschutz</div><div class="goal-desc">Saubere Technik und Nacken-Prävention sind nicht verhandelbar</div></div>
     </div>
-  </div>
-</div>
 
-<div class="subscreen" id="sub-prinzip">
-  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-prinzip')">←</button><div class="scr-title">Grundprinzipien</div></div>
-  <div class="scr-body">
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🧘</span><span class="prinzip-title">Nacken entspannt</span></div><div class="prinzip-text">Immer auf Nackenspannung achten — vor und während jeder Übung.</div><div class="prinzip-detail">Der Nacken ist der sensibelste Bereich dieses Plans. Schultern unten, Kiefer locker, Blick geradeaus.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🫁</span><span class="prinzip-title">Keine Pressatmung</span></div><div class="prinzip-text">Ausatmen bei Anstrengung — gleichmäßig und fließend.</div><div class="prinzip-detail">Pressatmung erhöht den Blutdruck sprunghaft. Ausatmen beim Drücken/Ziehen/Strecken.</div></div>
+    <!-- Grundprinzipien -->
+    <div class="sl">📋 Grundprinzipien</div>
+    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🧘</span><span class="prinzip-title">Nacken entspannt</span></div><div class="prinzip-text">Immer auf Nackenspannung achten — vor und während jeder Übung.</div><div class="prinzip-detail">Schultern unten, Kiefer locker, Blick geradeaus. Bei ersten Anzeichen sofort Gewicht reduzieren.</div></div>
+    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🫁</span><span class="prinzip-title">Keine Pressatmung</span></div><div class="prinzip-text">Ausatmen bei Anstrengung — gleichmäßig und fließend.</div><div class="prinzip-detail">Ausatmen beim Drücken/Ziehen/Strecken. Einatmen beim Ablassen.</div></div>
     <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🐢</span><span class="prinzip-title">Langsames Tempo</span></div><div class="prinzip-text">3 Sek. hoch / 3 Sek. runter — Qualität vor Geschwindigkeit.</div><div class="prinzip-detail">Das langsame Ablassen stimuliert mehr Muskelfasern und schützt Sehnen und Gelenke.</div></div>
     <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">⚖️</span><span class="prinzip-title">Sauber vor schwer</span></div><div class="prinzip-text">Technik zuerst — Gewicht steigern erst wenn die Form sitzt.</div><div class="prinzip-detail">Ist die letzte Wiederholung so sauber wie die erste? Dann darf das Gewicht erhöht werden.</div></div>
     <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🔁</span><span class="prinzip-title">Konstanz > Intensität</span></div><div class="prinzip-text">Regelmäßig und moderat schlägt gelegentliches Harttraining.</div><div class="prinzip-detail">3× pro Woche über Monate produziert mehr Ergebnis als sporadisches Intensivtraining.</div></div>
     <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🎯</span><span class="prinzip-title">Kein Muskelversagen</span></div><div class="prinzip-text">2–3 Wiederholungen Reserve behalten — immer kontrolliert.</div><div class="prinzip-detail">Intensität 6–7 von 10: genug Reiz für Wachstum, genug Reserve für schnelle Regeneration.</div></div>
-  </div>
-</div>
 
-<div class="subscreen" id="sub-alt">
-  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-alt')">←</button><div class="scr-title">Alternativen bei Beschwerden</div></div>
-  <div class="scr-body">
+    <!-- Alternativen bei Beschwerden -->
+    <div class="sl">🩹 Alternativen bei Beschwerden</div>
     <div class="alt-card"><div class="alt-label">🧘 Nackenproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Bankdrücken, Seitheben<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichtes Rudern</div></div>
     <div class="alt-card"><div class="alt-label">🔵 Schulterproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Klassisches Bankdrücken<br><span class="alt-key">Stattdessen: </span>Floor Press, reduzierte Bewegung</div></div>
     <div class="alt-card"><div class="alt-label">🟡 Ischias / Rücken</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Romanian Deadlift<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichte Squats</div></div>
     <div class="alt-card"><div class="alt-label">🦵 Knieproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Tiefe Kniebeugen<br><span class="alt-key">Stattdessen: </span>Halbe Squats, Glute Bridge Fokus</div></div>
     <div class="alt-card"><div class="alt-label">🟢 Karpaltunnel</div><div class="alt-row"><span class="alt-key">Weglassen: </span>—<br><span class="alt-key">Stattdessen: </span>Neutrale Handgelenke, SZ-Stange</div></div>
-  </div>
-</div>
 
-<div class="subscreen" id="sub-settings">
-  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-settings')">←</button><div class="scr-title">Einstellungen</div></div>
-  <div class="scr-body">
-    <div class="sl">Wisch-Schrittweite</div>
+    <!-- Export / Import -->
+    <div class="sl">📦 Daten</div>
+    <button class="action-btn" onclick="exportJSON()">↓ &nbsp;Export JSON</button>
+    <button class="action-btn" onclick="importJSON()">↑ &nbsp;Import JSON</button>
+
+    <!-- Einstellungen -->
+    <div class="sl">⚙️ Einstellungen</div>
     <div class="setting-row">
       <div><div class="setting-label">Schritt pro Wisch</div><div class="setting-sub">Gilt für alle Übungen</div></div>
       <div class="step-ctrl">
@@ -3060,23 +3046,17 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
         <button class="step-btn" onclick="adjustStep(+1)">+</button>
       </div>
     </div>
-    <div class="sl">Daten</div>
     <button class="danger-btn" onclick="confirmAction('reset-prog','Progression zurücksetzen?','Alle Gewichte werden auf die Startwerte zurückgesetzt.')">⚠️ &nbsp;Progression zurücksetzen</button>
     <button class="danger-btn" onclick="confirmAction('delete-all','Alle Daten löschen?','Gewichte, Verlauf, Körpergewicht — alles wird unwiderruflich gelöscht.')">🗑️ &nbsp;Alle Daten löschen</button>
+
+    <!-- Über die App -->
+    <div class="sl">ℹ️ Über mKraft</div>
+    <div class="card"><div class="card-title">Konzept</div><div class="card-body">Spickzettel-Prinzip: alle Information auf einen Blick. Wischen ändert das Gewicht direkt in der Wabe.</div></div>
+    <div class="card" style="margin-bottom:32px"><div class="card-title">Speicherung</div><div class="card-body">Alle Daten bleiben lokal auf diesem Gerät. Kein Account, kein Server. Export/Import über JSON.</div></div>
+
   </div>
 </div>
 
-<div class="subscreen" id="sub-about">
-  <div class="scr-header"><button class="scr-back" onclick="closeSub('sub-about')">←</button><div class="scr-title">Über mkraft</div></div>
-  <div class="scr-body">
-    <div class="about-logo">
-      <div class="about-app-name">mkraft</div>
-      <div class="about-version">Version 2.0</div>
-    </div>
-    <div class="card"><div class="card-title">Konzept</div><div class="card-body">Spickzettel-Prinzip: alle Information auf einen Blick. Wischen ändert das Gewicht direkt in der Wabe.</div></div>
-    <div class="card"><div class="card-title">Speicherung</div><div class="card-body">Alle Daten bleiben lokal auf diesem Gerät. Kein Account, kein Server. Export/Import über JSON im Menü.</div></div>
-  </div>
-</div>
 
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
@@ -3190,7 +3170,7 @@ function setupHitAreas(){
 
 function changeWeight(idx,delta){
   const ex=EXERCISES[idx];
-  ex.w=Math.max(0.5,Math.round((ex.w+delta)*10)/10);
+  ex.w=Math.max(0,Math.round((ex.w+delta)*10)/10);
   renderAll();
   recordHistory(ex.id,ex.w);
   saveExercises();
@@ -3226,7 +3206,7 @@ function renderDetailVals(){
 
 function detAdjust(field,dir){
   const ex=EXERCISES[detIdx];
-  if(field==='w'){ex.w=Math.max(0.5,Math.round((ex.w+dir*STATE.step)*10)/10);recordHistory(ex.id,ex.w);}
+  if(field==='w'){ex.w=Math.max(0,Math.round((ex.w+dir*STATE.step)*10)/10);recordHistory(ex.id,ex.w);}
   else if(field==='r') ex.r=Math.max(1,ex.r+dir);
   else if(field==='s') ex.s=Math.max(1,ex.s+dir);
   renderDetailVals();renderAll();saveExercises();
@@ -3331,8 +3311,8 @@ function executeConfirm(){
   closeConfirm();
 }
 
-function openScreen(id){ document.getElementById(id).classList.add('open'); if(id==='screen-menu') document.getElementById('step-display').textContent=STATE.step+' kg'; }
-function closeScreen(id){ document.getElementById(id).classList.remove('open'); document.querySelectorAll('.subscreen.open').forEach(s=>s.classList.remove('open')); }
+function openScreen(id){ document.getElementById(id).classList.add('open'); if(id==='screen-menu'){ document.getElementById('step-display').textContent=STATE.step+' kg'; renderKWList(); } }
+function closeScreen(id){ document.getElementById(id).classList.remove('open'); }
 function openSub(id){ document.getElementById(id).classList.add('open'); if(id==='sub-kw') renderKWList(); }
 function closeSub(id){ document.getElementById(id).classList.remove('open'); }
 
