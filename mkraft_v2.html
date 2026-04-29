@@ -211,7 +211,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 .sub-title{font-size:18px;font-weight:700;color:#F5F4EE}
 
 /* Subscreen body */
-.sub-body{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;background:#EBE8E0}
+.sub-body{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;background:transparent}
 
 /* Subscreen card */
 .sc{
@@ -241,7 +241,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 .sub-sl:first-child{margin-top:0}
 
 /* Val tiles in detail */
-.sub-val-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.sub-val-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;width:100%}
 .sub-val-tile{background:#4A6970;border-radius:12px;padding:12px 6px;text-align:center}
 .sub-val-label{font-size:9px;font-weight:700;color:#9CB0BA;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
 .sub-val-ctrl{display:flex;align-items:center;justify-content:center;gap:8px}
@@ -301,13 +301,13 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 .sub-prinzip-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .sub-prinzip-title{font-size:13px;font-weight:700;color:#F5C04A}
 .sub-prinzip-text{font-size:12px;color:#F5F4EE;line-height:1.5}
-.sub-prinzip-detail{font-size:11px;color:#9CB0BA;margin-top:4px;line-height:1.5}
+.sub-prinzip-detail{font-size:11px;color:rgba(224,234,240,0.7);margin-top:4px;line-height:1.5}
 
 /* Alternativen */
 .sub-alt{background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px}
 .sub-alt-label{font-size:13px;font-weight:700;color:#F5C04A;margin-bottom:6px}
 .sub-alt-row{font-size:11px;color:#F5F4EE;line-height:1.7}
-.sub-alt-key{color:#9CB0BA;font-weight:600}
+.sub-alt-key{color:rgba(224,234,240,0.7);font-weight:600}
 
 /* Settings */
 .sub-setting-row{
@@ -315,7 +315,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   background:#4A6970;border-radius:12px;padding:14px;margin-bottom:8px;
 }
 .sub-setting-label{font-size:13px;font-weight:600;color:#F5F4EE}
-.sub-setting-sub{font-size:11px;color:#9CB0BA;margin-top:2px}
+.sub-setting-sub{font-size:11px;color:rgba(224,234,240,0.7);margin-top:2px}
 .sub-step-ctrl{display:flex;align-items:center;gap:8px}
 .sub-step-btn{
   width:32px;height:32px;border-radius:50%;
@@ -332,8 +332,8 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 }
 .sub-action-btn{
   width:100%;padding:14px;border-radius:12px;
-  border:1.5px solid rgba(245,192,74,0.4);background:transparent;
-  color:#F5C04A;font-size:13px;font-weight:600;cursor:pointer;
+  border:none;background:#4A6970;
+  color:#E0EAF0;font-size:14px;font-weight:600;cursor:pointer;
   font-family:Inter,sans-serif;margin-bottom:8px;text-align:left;
 }
 </style>
@@ -3090,7 +3090,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 </div>
 
 <!-- DETAIL SCREEN -->
-<div class="screen" id="screen-detail" style="background:#EBE8E0">
+<div class="screen" id="screen-detail" style="background:linear-gradient(to bottom,#9CB0BA,#C8D8DF)">
   <div class="sub-header">
     <button class="sub-back" onclick="closeScreen('screen-detail')">←</button>
     <div class="sub-title" id="det-title">Übung</div>
@@ -3128,13 +3128,13 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
     </div>
     <div class="sc">
       <div class="sub-val-label">Gewicht · letzte 4 Wochen</div>
-      <div class="sub-chart-area" id="det-chart"></div>
+      <div id="det-chart" style="padding:4px 0"></div>
     </div>
   </div>
 </div>
 
 <!-- MENU SCREEN -->
-<div class="screen" id="screen-menu" style="background:#EBE8E0">
+<div class="screen" id="screen-menu" style="background:linear-gradient(to bottom,#9CB0BA,#C8D8DF)">
   <div class="sub-header">
     <button class="sub-back" onclick="closeScreen('screen-menu')">←</button>
     <div class="sub-title">Menü</div>
@@ -3351,23 +3351,44 @@ function detAdjust(field,dir){
 
 function renderChart(ex){
   const container=document.getElementById('det-chart');
-  const history=HISTORY[ex.id]||[];
-  const weeks=[];
-  for(let i=3;i>=0;i--){
-    const start=daysAgoStr(i*7+6);
-    const end=daysAgoStr(i*7);
-    const entries=history.filter(e=>e.date>=start&&e.date<=end);
-    const val=entries.length?entries[entries.length-1].w:null;
-    weeks.push({label:i===0?'Jetzt':'-'+i+'W',val,isCurrent:i===0});
+  const history=(HISTORY[ex.id]||[]).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  const last4=history.slice(0,4).reverse();
+  if(!last4.length){
+    container.innerHTML='<div style="font-size:13px;color:rgba(224,234,240,0.6);text-align:center;padding:16px 0">Noch keine Verlaufsdaten</div>';
+    return;
   }
-  const vals=weeks.map(w=>w.val).filter(v=>v!==null);
-  if(!vals.length){container.innerHTML='<div style="font-size:13px;color:'+"''' + TEXT_SUB + '''"+';text-align:center;padding:16px 0">Noch keine Verlaufsdaten</div>';return;}
-  const maxV=Math.max(...vals),minV=Math.min(...vals),range=maxV-minV||1;
-  container.innerHTML=weeks.map(w=>{
-    if(w.val===null) return '<div class="chart-bar-wrap"><div class="chart-val" style="color:var(--petrol-mid)">–</div><div class="chart-bar" style="height:4px;background:var(--surface3)"></div><div class="chart-lbl">'+w.label+'</div></div>';
-    const pct=20+((w.val-minV)/range)*60;
-    return '<div class="sub-chart-bar-wrap"><div class="sub-chart-val">'+w.val+'</div><div class="sub-chart-bar'+(w.isCurrent?' now':'')+'" style="height:'+pct+'px"></div><div class="sub-chart-lbl">'+w.label+'</div></div>';
-  }).join('');
+  // Timeline style
+  let html='<div style="position:relative;padding:4px 0;width:100%">';
+  // vertical line
+  html+='<div style="position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:rgba(224,234,240,0.15);border-radius:1px"></div>';
+  last4.forEach((entry,i)=>{
+    const isLast=i===last4.length-1;
+    const prev=last4[i-1];
+    let diff='';
+    let diffColor='rgba(224,234,240,0.6)';
+    if(prev){
+      const d=Math.round((entry.w-prev.w)*10)/10;
+      if(d>0){diff='↑ +'+d;diffColor='#6adb8a';}
+      else if(d<0){diff='↓ '+d;diffColor='#ff7070';}
+      else{diff='→';diffColor='rgba(224,234,240,0.5)';}
+    }
+    const dotColor=isLast?'#F5C04A':'rgba(224,234,240,0.4)';
+    const dotBorder=isLast?'#F5C04A':'rgba(224,234,240,0.6)';
+    const dotSize=isLast?8:5;
+    const wColor=isLast?'#F5C04A':'#E0EAF0';
+    const wSize=isLast?15:13;
+    const wWeight=isLast?'700':'500';
+    const label=isLast?'<span style="font-size:9px;font-weight:700;color:#F5C04A;margin-left:6px">JETZT</span>':'';
+    html+=`<div style="display:flex;align-items:center;gap:12px;padding:7px 0;position:relative">
+      <div style="width:${dotSize*2}px;height:${dotSize*2}px;border-radius:50%;background:${dotColor};border:2px solid ${dotBorder};flex-shrink:0;position:relative;z-index:1;margin-left:${isLast?0:2}px"></div>
+      <span style="font-size:11px;color:rgba(224,234,240,0.6);min-width:42px">${formatDate(entry.date)}</span>
+      <span style="font-size:${wSize}px;font-weight:${wWeight};color:${wColor}">${entry.w} kg</span>
+      ${diff?`<span style="font-size:11px;color:${diffColor}">${diff}</span>`:''}
+      ${label}
+    </div>`;
+  });
+  html+='</div>';
+  container.innerHTML=html;
 }
 
 function saveKW(){
