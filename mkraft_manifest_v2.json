@@ -1,0 +1,36 @@
+{
+  "name": "mKraft",
+  "short_name": "mKraft",
+  "description": "Trainings-Spickzettel f\u00fcr Krafttraining",
+  "start_url": "./mkraft_v2.html",
+  "display": "standalone",
+  "background_color": "#141e22",
+  "theme_color": "#324A52",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "mkraft_icon_192_v2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "mkraft_icon_192_v2.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "mkraft_icon_512_v2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "mkraft_icon_512_v2.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
