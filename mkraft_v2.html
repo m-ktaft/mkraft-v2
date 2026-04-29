@@ -185,6 +185,157 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 .about-version{font-size:13px;color:var(--petrol-mid);margin-top:4px}
 
 @media(min-width:600px){svg{border:1px solid #333}}
+
+/* Subscreen background */
+.sub-bg{position:relative;min-height:100%}
+.sub-bg-svg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.sub-content{position:relative;z-index:1}
+
+/* Subscreen header */
+.sub-header{
+  background:#6E8896;
+  padding:max(env(safe-area-inset-top,16px),16px) 20px 14px;
+  border-bottom:1px solid rgba(0,0,0,0.12);
+  display:flex;align-items:center;gap:14px;
+  flex-shrink:0;
+  position:sticky;top:0;z-index:10;
+}
+.sub-back{
+  width:44px;height:44px;border-radius:50%;
+  border:2px solid rgba(255,255,255,0.5);
+  background:rgba(255,255,255,0.15);
+  color:#F5F4EE;font-size:22px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-family:Inter,sans-serif;flex-shrink:0;
+}
+.sub-title{font-size:18px;font-weight:700;color:#F5F4EE}
+
+/* Subscreen body */
+.sub-body{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;background:#F5F4EE}
+
+/* Subscreen card */
+.sc{
+  background:#6E8896;
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:12px;
+}
+.sc-label{
+  font-size:10px;font-weight:700;
+  color:#9CB0BA;
+  letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.sc-title{font-size:15px;font-weight:700;color:#F5F4EE;margin-bottom:6px}
+.sc-body{font-size:13px;color:#F5F4EE;line-height:1.6}
+.sc-muscle{font-size:11px;color:#9CB0BA;margin-bottom:12px}
+
+/* Section label */
+.sub-sl{
+  font-size:10px;font-weight:700;color:rgba(110,136,150,0.8);
+  letter-spacing:.14em;text-transform:uppercase;
+  margin:20px 0 10px;
+  display:flex;align-items:center;gap:10px;
+}
+.sub-sl::after{content:"";flex:1;height:1px;background:rgba(110,136,150,0.3)}
+.sub-sl:first-child{margin-top:0}
+
+/* Val tiles in detail */
+.sub-val-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.sub-val-tile{background:#6E8896;border-radius:12px;padding:12px 6px;text-align:center}
+.sub-val-label{font-size:9px;font-weight:700;color:#9CB0BA;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.sub-val-ctrl{display:flex;align-items:center;justify-content:center;gap:8px}
+.sub-val-btn{
+  width:30px;height:30px;border-radius:50%;
+  border:1.5px solid rgba(245,192,74,0.5);
+  background:transparent;color:#F5C04A;
+  font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:Inter,sans-serif;line-height:1;
+}
+.sub-val-btn:active{background:rgba(245,192,74,0.15)}
+.sub-val-num{font-size:18px;font-weight:700;color:#F5F4EE;min-width:36px;text-align:center}
+
+/* Chart in detail */
+.sub-chart-area{height:80px;display:flex;align-items:flex-end;gap:4px;margin-top:8px}
+.sub-chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.sub-chart-bar{width:100%;border-radius:4px 4px 0 0;min-height:2px;background:rgba(255,255,255,0.3)}
+.sub-chart-bar.now{background:#F5C04A}
+.sub-chart-lbl{font-size:9px;color:#9CB0BA;text-align:center}
+.sub-chart-val{font-size:9px;color:#F5F4EE;font-weight:600;text-align:center}
+
+/* KW input */
+.sub-kw-row{display:flex;gap:10px;margin-bottom:12px}
+.sub-kw-input{
+  flex:1;background:rgba(255,255,255,0.15);
+  border:1.5px solid rgba(255,255,255,0.3);
+  border-radius:12px;padding:12px 16px;
+  font-size:18px;font-weight:700;color:#F5F4EE;
+  font-family:Inter,sans-serif;text-align:center;outline:none;
+}
+.sub-kw-input::placeholder{color:rgba(255,255,255,0.4)}
+.sub-kw-input:focus{border-color:#F5C04A}
+.sub-kw-save{
+  padding:12px 18px;background:#F5C04A;
+  border:none;border-radius:12px;
+  color:#1a0e00;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:Inter,sans-serif;
+}
+.sub-kw-entry{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.1);
+  font-size:13px;color:#F5F4EE;
+}
+.sub-kw-entry:last-child{border-bottom:none}
+.sub-kw-date{color:#9CB0BA;font-size:11px}
+.sub-kw-val{font-weight:700;color:#F5C04A}
+
+/* Goals grid */
+.sub-goals-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sub-goal-card{background:#6E8896;border-radius:12px;padding:12px 10px}
+.sub-goal-title{font-size:12px;font-weight:700;color:#F5C04A;margin-bottom:4px}
+.sub-goal-desc{font-size:11px;color:#F5F4EE;line-height:1.5}
+
+/* Prinzipien */
+.sub-prinzip{background:#6E8896;border-radius:12px;padding:14px;margin-bottom:8px}
+.sub-prinzip-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.sub-prinzip-title{font-size:13px;font-weight:700;color:#F5C04A}
+.sub-prinzip-text{font-size:12px;color:#F5F4EE;line-height:1.5}
+.sub-prinzip-detail{font-size:11px;color:#9CB0BA;margin-top:4px;line-height:1.5}
+
+/* Alternativen */
+.sub-alt{background:#6E8896;border-radius:12px;padding:14px;margin-bottom:8px}
+.sub-alt-label{font-size:13px;font-weight:700;color:#F5C04A;margin-bottom:6px}
+.sub-alt-row{font-size:11px;color:#F5F4EE;line-height:1.7}
+.sub-alt-key{color:#9CB0BA;font-weight:600}
+
+/* Settings */
+.sub-setting-row{
+  display:flex;justify-content:space-between;align-items:center;
+  background:#6E8896;border-radius:12px;padding:14px;margin-bottom:8px;
+}
+.sub-setting-label{font-size:13px;font-weight:600;color:#F5F4EE}
+.sub-setting-sub{font-size:11px;color:#9CB0BA;margin-top:2px}
+.sub-step-ctrl{display:flex;align-items:center;gap:8px}
+.sub-step-btn{
+  width:32px;height:32px;border-radius:50%;
+  border:1.5px solid rgba(245,192,74,0.5);background:transparent;
+  color:#F5C04A;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-family:Inter,sans-serif;
+}
+.sub-step-val{font-size:15px;font-weight:700;color:#F5C04A;min-width:48px;text-align:center}
+.sub-danger-btn{
+  width:100%;padding:14px;border-radius:12px;
+  border:1px solid rgba(255,85,85,0.4);background:rgba(255,85,85,0.1);
+  color:#ff6666;font-size:13px;font-weight:600;cursor:pointer;
+  font-family:Inter,sans-serif;margin-bottom:8px;text-align:left;
+}
+.sub-action-btn{
+  width:100%;padding:14px;border-radius:12px;
+  border:1.5px solid rgba(245,192,74,0.4);background:transparent;
+  color:#F5C04A;font-size:13px;font-weight:600;cursor:pointer;
+  font-family:Inter,sans-serif;margin-bottom:8px;text-align:left;
+}
 </style>
 </head>
 <body>
@@ -2939,124 +3090,111 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 </div>
 
 <!-- DETAIL SCREEN -->
-<div class="screen" id="screen-detail">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeScreen('screen-detail')">←</button>
-    <div class="scr-title" id="det-title">Übung</div>
+<div class="screen" id="screen-detail" style="background:#F5F4EE">
+  <div class="sub-header">
+    <button class="sub-back" onclick="closeScreen('screen-detail')">←</button>
+    <div class="sub-title" id="det-title">Übung</div>
   </div>
-  <div class="scr-body">
-
-    <!-- Muskel & Hinweis -->
-    <div style="background:var(--surface2);border:1px solid var(--border2);border-radius:16px;padding:16px;margin-bottom:14px;">
-      <div style="font-size:11px;font-weight:700;color:var(--petrol-mid);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px" id="det-muscle">–</div>
-      <div style="font-size:13px;color:var(--text-light);line-height:1.6" id="det-note"></div>
+  <div class="sub-body">
+    <div class="sc" style="margin-bottom:12px">
+      <div class="sub-val-label" id="det-muscle">–</div>
+      <div style="font-size:13px;color:#F5F4EE;line-height:1.6" id="det-note"></div>
     </div>
-
-    <!-- Werte: Gewicht / Wdh / Sätze -->
-    <div class="val-row" style="margin-bottom:14px">
-      <div class="val-tile">
-        <div class="val-tile-label">Gewicht kg</div>
-        <div class="val-tile-ctrl">
-          <button class="val-btn" onclick="detAdjust('w',-1)">−</button>
-          <div class="val-num" id="det-w">–</div>
-          <button class="val-btn" onclick="detAdjust('w',+1)">+</button>
+    <div class="sub-val-row">
+      <div class="sub-val-tile">
+        <div class="sub-val-label">Gewicht kg</div>
+        <div class="sub-val-ctrl">
+          <button class="sub-val-btn" onclick="detAdjust('w',-1)">−</button>
+          <div class="sub-val-num" id="det-w">–</div>
+          <button class="sub-val-btn" onclick="detAdjust('w',+1)">+</button>
         </div>
       </div>
-      <div class="val-tile">
-        <div class="val-tile-label">Wdh</div>
-        <div class="val-tile-ctrl">
-          <button class="val-btn" onclick="detAdjust('r',-1)">−</button>
-          <div class="val-num" id="det-r">–</div>
-          <button class="val-btn" onclick="detAdjust('r',+1)">+</button>
+      <div class="sub-val-tile">
+        <div class="sub-val-label">Wdh</div>
+        <div class="sub-val-ctrl">
+          <button class="sub-val-btn" onclick="detAdjust('r',-1)">−</button>
+          <div class="sub-val-num" id="det-r">–</div>
+          <button class="sub-val-btn" onclick="detAdjust('r',+1)">+</button>
         </div>
       </div>
-      <div class="val-tile">
-        <div class="val-tile-label">Sätze</div>
-        <div class="val-tile-ctrl">
-          <button class="val-btn" onclick="detAdjust('s',-1)">−</button>
-          <div class="val-num" id="det-s">–</div>
-          <button class="val-btn" onclick="detAdjust('s',+1)">+</button>
+      <div class="sub-val-tile">
+        <div class="sub-val-label">Sätze</div>
+        <div class="sub-val-ctrl">
+          <button class="sub-val-btn" onclick="detAdjust('s',-1)">−</button>
+          <div class="sub-val-num" id="det-s">–</div>
+          <button class="sub-val-btn" onclick="detAdjust('s',+1)">+</button>
         </div>
       </div>
     </div>
-
-    <!-- Verlauf -->
-    <div class="history-wrap">
-      <div class="history-title">Gewicht · letzte 4 Wochen</div>
-      <div class="chart-area" id="det-chart"></div>
+    <div class="sc">
+      <div class="sub-val-label">Gewicht · letzte 4 Wochen</div>
+      <div class="sub-chart-area" id="det-chart"></div>
     </div>
-
   </div>
 </div>
 
 <!-- MENU SCREEN -->
-<div class="screen" id="screen-menu">
-  <div class="scr-header">
-    <button class="scr-back" onclick="closeScreen('screen-menu')">←</button>
-    <div class="scr-title">Menü</div>
+<div class="screen" id="screen-menu" style="background:#F5F4EE">
+  <div class="sub-header">
+    <button class="sub-back" onclick="closeScreen('screen-menu')">←</button>
+    <div class="sub-title">Menü</div>
   </div>
-  <div class="scr-body">
+  <div class="sub-body">
 
-    <!-- Körpergewicht -->
-    <div class="sl">⚖️ Körpergewicht</div>
-    <div class="kw-input-row">
-      <input class="kw-input" id="kw-input" type="number" step="0.1" min="30" max="300" placeholder="kg">
-      <button class="kw-save-btn" onclick="saveKW()">Speichern</button>
-    </div>
-    <div id="kw-list"></div>
-
-    <!-- Meine Ziele -->
-    <div class="sl">🎯 Meine Ziele</div>
-    <div class="goals-grid">
-      <div class="goal-card"><div class="goal-title">Stoffwechsel</div><div class="goal-desc">Krafttraining aktiviert den Stoffwechsel dauerhaft — auch in Ruhephasen</div></div>
-      <div class="goal-card"><div class="goal-title">Insulinsensitivität</div><div class="goal-desc">Muskelarbeit verbessert die Glukoseverwertung direkt</div></div>
-      <div class="goal-card"><div class="goal-title">Longevity</div><div class="goal-desc">Langfristige Gesundheit — Konstanz schlägt Intensität</div></div>
-      <div class="goal-card"><div class="goal-title">Gelenkschutz</div><div class="goal-desc">Saubere Technik und Nacken-Prävention sind nicht verhandelbar</div></div>
+    <div class="sub-sl">⚖️ Körpergewicht</div>
+    <div class="sc">
+      <div class="sub-kw-row">
+        <input class="sub-kw-input" id="kw-input" type="number" step="0.1" min="30" max="300" placeholder="kg">
+        <button class="sub-kw-save" onclick="saveKW()">Speichern</button>
+      </div>
+      <div id="kw-list"></div>
     </div>
 
-    <!-- Grundprinzipien -->
-    <div class="sl">📋 Grundprinzipien</div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🧘</span><span class="prinzip-title">Nacken entspannt</span></div><div class="prinzip-text">Immer auf Nackenspannung achten — vor und während jeder Übung.</div><div class="prinzip-detail">Schultern unten, Kiefer locker, Blick geradeaus. Bei ersten Anzeichen sofort Gewicht reduzieren.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🫁</span><span class="prinzip-title">Keine Pressatmung</span></div><div class="prinzip-text">Ausatmen bei Anstrengung — gleichmäßig und fließend.</div><div class="prinzip-detail">Ausatmen beim Drücken/Ziehen/Strecken. Einatmen beim Ablassen.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🐢</span><span class="prinzip-title">Langsames Tempo</span></div><div class="prinzip-text">3 Sek. hoch / 3 Sek. runter — Qualität vor Geschwindigkeit.</div><div class="prinzip-detail">Das langsame Ablassen stimuliert mehr Muskelfasern und schützt Sehnen und Gelenke.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">⚖️</span><span class="prinzip-title">Sauber vor schwer</span></div><div class="prinzip-text">Technik zuerst — Gewicht steigern erst wenn die Form sitzt.</div><div class="prinzip-detail">Ist die letzte Wiederholung so sauber wie die erste? Dann darf das Gewicht erhöht werden.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🔁</span><span class="prinzip-title">Konstanz > Intensität</span></div><div class="prinzip-text">Regelmäßig und moderat schlägt gelegentliches Harttraining.</div><div class="prinzip-detail">3× pro Woche über Monate produziert mehr Ergebnis als sporadisches Intensivtraining.</div></div>
-    <div class="prinzip-card"><div class="prinzip-head"><span class="prinzip-icon">🎯</span><span class="prinzip-title">Kein Muskelversagen</span></div><div class="prinzip-text">2–3 Wiederholungen Reserve behalten — immer kontrolliert.</div><div class="prinzip-detail">Intensität 6–7 von 10: genug Reiz für Wachstum, genug Reserve für schnelle Regeneration.</div></div>
+    <div class="sub-sl">🎯 Meine Ziele</div>
+    <div class="sub-goals-grid">
+      <div class="sub-goal-card"><div class="sub-goal-title">Stoffwechsel</div><div class="sub-goal-desc">Krafttraining aktiviert den Stoffwechsel dauerhaft — auch in Ruhephasen</div></div>
+      <div class="sub-goal-card"><div class="sub-goal-title">Insulinsensitivität</div><div class="sub-goal-desc">Muskelarbeit verbessert die Glukoseverwertung direkt</div></div>
+      <div class="sub-goal-card"><div class="sub-goal-title">Longevity</div><div class="sub-goal-desc">Langfristige Gesundheit — Konstanz schlägt Intensität</div></div>
+      <div class="sub-goal-card"><div class="sub-goal-title">Gelenkschutz</div><div class="sub-goal-desc">Saubere Technik und Nacken-Prävention sind nicht verhandelbar</div></div>
+    </div>
 
-    <!-- Alternativen bei Beschwerden -->
-    <div class="sl">🩹 Alternativen bei Beschwerden</div>
-    <div class="alt-card"><div class="alt-label">🧘 Nackenproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Bankdrücken, Seitheben<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichtes Rudern</div></div>
-    <div class="alt-card"><div class="alt-label">🔵 Schulterproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Klassisches Bankdrücken<br><span class="alt-key">Stattdessen: </span>Floor Press, reduzierte Bewegung</div></div>
-    <div class="alt-card"><div class="alt-label">🟡 Ischias / Rücken</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Romanian Deadlift<br><span class="alt-key">Stattdessen: </span>Glute Bridge, leichte Squats</div></div>
-    <div class="alt-card"><div class="alt-label">🦵 Knieproblem</div><div class="alt-row"><span class="alt-key">Weglassen: </span>Tiefe Kniebeugen<br><span class="alt-key">Stattdessen: </span>Halbe Squats, Glute Bridge Fokus</div></div>
-    <div class="alt-card"><div class="alt-label">🟢 Karpaltunnel</div><div class="alt-row"><span class="alt-key">Weglassen: </span>—<br><span class="alt-key">Stattdessen: </span>Neutrale Handgelenke, SZ-Stange</div></div>
+    <div class="sub-sl">📋 Grundprinzipien</div>
+    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🧘</span><span class="sub-prinzip-title">Nacken entspannt</span></div><div class="sub-prinzip-text">Immer auf Nackenspannung achten — vor und während jeder Übung.</div><div class="sub-prinzip-detail">Schultern unten, Kiefer locker, Blick geradeaus.</div></div>
+    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🫁</span><span class="sub-prinzip-title">Keine Pressatmung</span></div><div class="sub-prinzip-text">Ausatmen bei Anstrengung — gleichmäßig und fließend.</div><div class="sub-prinzip-detail">Ausatmen beim Drücken/Ziehen/Strecken. Einatmen beim Ablassen.</div></div>
+    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🐢</span><span class="sub-prinzip-title">Langsames Tempo</span></div><div class="sub-prinzip-text">3 Sek. hoch / 3 Sek. runter — Qualität vor Geschwindigkeit.</div><div class="sub-prinzip-detail">Langsames Ablassen stimuliert mehr Muskelfasern und schützt Gelenke.</div></div>
+    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>⚖️</span><span class="sub-prinzip-title">Sauber vor schwer</span></div><div class="sub-prinzip-text">Technik zuerst — Gewicht steigern erst wenn die Form sitzt.</div><div class="sub-prinzip-detail">Ist die letzte Wiederholung so sauber wie die erste? Dann erhöhen.</div></div>
+    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🔁</span><span class="sub-prinzip-title">Konstanz > Intensität</span></div><div class="sub-prinzip-text">Regelmäßig und moderat schlägt gelegentliches Harttraining.</div><div class="sub-prinzip-detail">3× pro Woche über Monate = mehr Ergebnis als sporadisches Training.</div></div>
+    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🎯</span><span class="sub-prinzip-title">Kein Muskelversagen</span></div><div class="sub-prinzip-text">2–3 Wiederholungen Reserve behalten — immer kontrolliert.</div><div class="sub-prinzip-detail">Intensität 6–7 von 10: genug Reiz, genug Reserve für Regeneration.</div></div>
 
-    <!-- Export / Import -->
-    <div class="sl">📦 Daten</div>
-    <button class="action-btn" onclick="exportJSON()">↓ &nbsp;Export JSON</button>
-    <button class="action-btn" onclick="importJSON()">↑ &nbsp;Import JSON</button>
+    <div class="sub-sl">🩹 Alternativen bei Beschwerden</div>
+    <div class="sub-alt"><div class="sub-alt-label">🧘 Nackenproblem</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Bankdrücken, Seitheben<br><span class="sub-alt-key">Stattdessen: </span>Glute Bridge, leichtes Rudern</div></div>
+    <div class="sub-alt"><div class="sub-alt-label">🔵 Schulterproblem</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Klassisches Bankdrücken<br><span class="sub-alt-key">Stattdessen: </span>Floor Press, reduzierte Bewegung</div></div>
+    <div class="sub-alt"><div class="sub-alt-label">🟡 Ischias / Rücken</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Romanian Deadlift<br><span class="sub-alt-key">Stattdessen: </span>Glute Bridge, leichte Squats</div></div>
+    <div class="sub-alt"><div class="sub-alt-label">🦵 Knieproblem</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Tiefe Kniebeugen<br><span class="sub-alt-key">Stattdessen: </span>Halbe Squats, Glute Bridge Fokus</div></div>
+    <div class="sub-alt"><div class="sub-alt-label">🟢 Karpaltunnel</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>—<br><span class="sub-alt-key">Stattdessen: </span>Neutrale Handgelenke, SZ-Stange</div></div>
 
-    <!-- Einstellungen -->
-    <div class="sl">⚙️ Einstellungen</div>
-    <div class="setting-row">
-      <div><div class="setting-label">Schritt pro Wisch</div><div class="setting-sub">Gilt für alle Übungen</div></div>
-      <div class="step-ctrl">
-        <button class="step-btn" onclick="adjustStep(-1)">−</button>
-        <div class="step-val" id="step-display">2.5 kg</div>
-        <button class="step-btn" onclick="adjustStep(+1)">+</button>
+    <div class="sub-sl">📦 Daten</div>
+    <button class="sub-action-btn" onclick="exportJSON()">↓ &nbsp;Export JSON</button>
+    <button class="sub-action-btn" onclick="importJSON()">↑ &nbsp;Import JSON</button>
+
+    <div class="sub-sl">⚙️ Einstellungen</div>
+    <div class="sub-setting-row">
+      <div><div class="sub-setting-label">Schritt pro Wisch</div><div class="sub-setting-sub">Gilt für alle Übungen</div></div>
+      <div class="sub-step-ctrl">
+        <button class="sub-step-btn" onclick="adjustStep(-1)">−</button>
+        <div class="sub-step-val" id="step-display">2.5 kg</div>
+        <button class="sub-step-btn" onclick="adjustStep(+1)">+</button>
       </div>
     </div>
-    <button class="danger-btn" onclick="confirmAction('reset-prog','Progression zurücksetzen?','Alle Gewichte werden auf die Startwerte zurückgesetzt.')">⚠️ &nbsp;Progression zurücksetzen</button>
-    <button class="danger-btn" onclick="confirmAction('delete-all','Alle Daten löschen?','Gewichte, Verlauf, Körpergewicht — alles wird unwiderruflich gelöscht.')">🗑️ &nbsp;Alle Daten löschen</button>
+    <button class="sub-danger-btn" onclick="confirmAction('reset-prog','Progression zurücksetzen?','Alle Gewichte werden auf die Startwerte zurückgesetzt.')">⚠️ &nbsp;Progression zurücksetzen</button>
+    <button class="sub-danger-btn" onclick="confirmAction('delete-all','Alle Daten löschen?','Alles wird unwiderruflich gelöscht.')">🗑️ &nbsp;Alle Daten löschen</button>
 
-    <!-- Über die App -->
-    <div class="sl">ℹ️ Über mKraft</div>
-    <div class="card"><div class="card-title">Konzept</div><div class="card-body">Spickzettel-Prinzip: alle Information auf einen Blick. Wischen ändert das Gewicht direkt in der Wabe.</div></div>
-    <div class="card" style="margin-bottom:32px"><div class="card-title">Speicherung</div><div class="card-body">Alle Daten bleiben lokal auf diesem Gerät. Kein Account, kein Server. Export/Import über JSON.</div></div>
+    <div class="sub-sl">ℹ️ Über mKraft</div>
+    <div class="sc"><div class="sc-title">Konzept</div><div class="sc-body">Spickzettel-Prinzip: alle Information auf einen Blick. Wischen ändert das Gewicht direkt in der Wabe.</div></div>
+    <div class="sc" style="margin-bottom:40px"><div class="sc-title">Speicherung</div><div class="sc-body">Alle Daten bleiben lokal auf diesem Gerät. Kein Account, kein Server. Export/Import über JSON.</div></div>
 
   </div>
 </div>
-
 
 <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)">
 
@@ -3225,12 +3363,12 @@ function renderChart(ex){
     weeks.push({label:i===0?'Jetzt':'-'+i+'W',val,isCurrent:i===0});
   }
   const vals=weeks.map(w=>w.val).filter(v=>v!==null);
-  if(!vals.length){container.innerHTML='<div class="no-history">Noch keine Verlaufsdaten</div>';return;}
+  if(!vals.length){container.innerHTML='<div style="font-size:13px;color:'+"''' + TEXT_SUB + '''"+';text-align:center;padding:16px 0">Noch keine Verlaufsdaten</div>';return;}
   const maxV=Math.max(...vals),minV=Math.min(...vals),range=maxV-minV||1;
   container.innerHTML=weeks.map(w=>{
     if(w.val===null) return '<div class="chart-bar-wrap"><div class="chart-val" style="color:var(--petrol-mid)">–</div><div class="chart-bar" style="height:4px;background:var(--surface3)"></div><div class="chart-lbl">'+w.label+'</div></div>';
     const pct=20+((w.val-minV)/range)*60;
-    return '<div class="chart-bar-wrap"><div class="chart-val">'+w.val+'</div><div class="chart-bar'+(w.isCurrent?' current':'')+'" style="height:'+pct+'px"></div><div class="chart-lbl">'+w.label+'</div></div>';
+    return '<div class="sub-chart-bar-wrap"><div class="sub-chart-val">'+w.val+'</div><div class="sub-chart-bar'+(w.isCurrent?' now':'')+'" style="height:'+pct+'px"></div><div class="sub-chart-lbl">'+w.label+'</div></div>';
   }).join('');
 }
 
@@ -3250,8 +3388,8 @@ function saveKW(){
 
 function renderKWList(){
   const el=document.getElementById('kw-list');
-  if(!KW_DATA.length){el.innerHTML='<div class="no-history">Noch keine Einträge</div>';return;}
-  el.innerHTML=KW_DATA.slice(0,20).map(e=>'<div class="kw-entry"><span class="kw-date">'+formatDate(e.date)+'</span><span class="kw-val">'+e.w+' kg</span></div>').join('');
+  if(!KW_DATA.length){el.innerHTML='<div style="font-size:13px;color:'+"''' + TEXT_SUB + '''"+';padding:8px 0">Noch keine Einträge</div>';return;}
+  el.innerHTML=KW_DATA.slice(0,20).map(e=>'<div class="sub-kw-entry"><span class="sub-kw-date">'+formatDate(e.date)+'</span><span class="sub-kw-val">'+e.w+' kg</span></div>').join('');
 }
 
 function adjustStep(dir){
