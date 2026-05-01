@@ -3512,16 +3512,13 @@ function renderDynamicWaben(){
   document.querySelectorAll('.dynamic-hit').forEach(e=>e.remove());
   if(!dynamicExercises.length) return;
 
-  // Enable scrolling
   document.body.style.overflowY='auto';
   document.documentElement.style.overflowY='auto';
 
   const svg=document.querySelector('svg');
   const hitLayer=document.querySelector('.hit-layer');
   const svgNS='http://www.w3.org/2000/svg';
-  const SVG_W=412, R=86, VERSATZ=7, ROW_GAP=225, BASE_ROW=795;
-  const BG='#F5F4EE';
-  const S4_F='#EBE8E0',S3_F='#D6D2C5',S2_F='#9CB0BA',S1_F='#6E8896',CY='#00E5FF';
+  const SVG_W=412,R=86,VERSATZ=7,ROW_GAP=225,BASE_ROW=795;
 
   dynamicExercises.forEach((ex,di)=>{
     const i=staticCount+di;
@@ -3532,49 +3529,23 @@ function renderDynamicWaben(){
     const cx=isLeft?110:303;
     const cy=reiheIdx%2===0?(isLeft?rowMid-VERSATZ:rowMid+VERSATZ):(isLeft?rowMid+VERSATZ:rowMid-VERSATZ);
 
-    // Expand SVG
+    // Expand SVG viewBox
     const vb=svg.getAttribute('viewBox').split(' ');
     const neededH=cy+R+80;
     if(neededH>parseInt(vb[3])){
       svg.setAttribute('viewBox',`0 0 ${SVG_W} ${neededH}`);
-      const wrap=document.querySelector('.svg-wrap');
-      wrap.style.maxHeight=neededH+'px';
-      wrap.style.height='auto';
+      document.querySelector('.svg-wrap').style.maxHeight='none';
+      document.querySelector('.svg-wrap').style.height='auto';
     }
 
     const g=document.createElementNS(svgNS,'g');
     g.setAttribute('class','dynamic-wabe-wrap');
 
-    // Background rect
+    // Simple background rect — no texture generation
     const bgRect=document.createElementNS(svgNS,'rect');
     bgRect.setAttribute('x','0');bgRect.setAttribute('y',String(cy-R-30));
     bgRect.setAttribute('width',String(SVG_W));bgRect.setAttribute('height',String(R*2+60));
-    bgRect.setAttribute('fill',BG);g.appendChild(bgRect);
-
-    // Texture layers
-    [{r:6,f:S4_F,sw:'.4',so:'.35'},{r:11,f:S3_F,sw:'.5',so:'.4'},
-     {r:19,f:S2_F,sw:'.6',so:'.5'},{r:34,f:S1_F,sw:'.8',so:'.6'}
-    ].forEach(({r:tr,f,sw,so})=>{
-      const ay=tr*Math.sqrt(3)*0.97, ax=tr*3*0.97;
-      let ry=cy-R-30, row=0;
-      while(ry<cy+R+30){
-        const vx=row%2===0?tr*1.5:0;
-        let rx=-tr*2+vx;
-        while(rx<SVG_W+tr*2){
-          const seed=(rx*7+ry*13+i*17)%100;
-          const jx=(seed%7)-3, jy=((seed*3)%7)-3;
-          const rot=(seed%6)*(Math.PI/3);
-          const pts=[];
-          for(let k=0;k<6;k++){const a=rot+k*Math.PI/3;pts.push(`${Math.round(rx+jx+tr*Math.cos(a))},${Math.round(ry+jy+tr*Math.sin(a))}`);}
-          const p=document.createElementNS(svgNS,'polygon');
-          p.setAttribute('points',pts.join(' '));p.setAttribute('fill',f);
-          p.setAttribute('stroke',CY);p.setAttribute('stroke-width',sw);
-          p.setAttribute('stroke-opacity',so);p.setAttribute('style','pointer-events:none');
-          g.appendChild(p);rx+=ax;
-        }
-        ry+=ay;row++;
-      }
-    });
+    bgRect.setAttribute('fill','#F5F4EE');g.appendChild(bgRect);
 
     // Wabe hexagon points
     const hexPts=[];
@@ -3594,9 +3565,9 @@ function renderDynamicWaben(){
 
     // Inner ring
     const ipts=hexPts.map(p=>{const[x,y]=p.split(',').map(Number);return `${(cx+(x-cx)*0.92).toFixed(1)},${(cy+(y-cy)*0.92).toFixed(1)}`;}).join(' ');
-    const pi=document.createElementNS(svgNS,'polygon');pi.setAttribute('points',ipts);pi.setAttribute('fill','none');
-    pi.setAttribute('stroke','#FFE8A0');pi.setAttribute('stroke-width','1');pi.setAttribute('stroke-opacity','.7');
-    pi.setAttribute('style','pointer-events:none');g.appendChild(pi);
+    const pi2=document.createElementNS(svgNS,'polygon');pi2.setAttribute('points',ipts);pi2.setAttribute('fill','none');
+    pi2.setAttribute('stroke','#FFE8A0');pi2.setAttribute('stroke-width','1');pi2.setAttribute('stroke-opacity','.7');
+    pi2.setAttribute('style','pointer-events:none');g.appendChild(pi2);
 
     // Texts
     [[`ex-weight-${i}`,cy-30,'22','700','#F5C04A',Number.isInteger(ex.w)?String(ex.w):ex.w.toFixed(1)],
@@ -3623,7 +3594,7 @@ function renderDynamicWaben(){
     hitDiv.addEventListener('touchend',e=>{if(!mv)openDetail(i);e.preventDefault();},{passive:false});
   });
 
-  // Move menu wabe to last row bottom-right
+  // Move menu wabe to bottom-right corner of last row
   const lastI=EXERCISES.length-1;
   const lastReihe=Math.floor(lastI/2);
   const staticRows=[120,345,570,795];
@@ -3631,8 +3602,7 @@ function renderDynamicWaben(){
   const lastIsLeft=lastI%2===0;
   const lastCy=lastReihe%2===0?(lastIsLeft?lastRowMid-VERSATZ:lastRowMid+VERSATZ):(lastIsLeft?lastRowMid+VERSATZ:lastRowMid-VERSATZ);
   const menuCy=lastCy+ROW_GAP*0.5;
-  const menuCx=SVG_W-10;
-  const mR=35;
+  const mR=35, menuCx=SVG_W-10;
   const newMenuPts=[];
   for(let k=0;k<6;k++){const a=k*Math.PI/3;newMenuPts.push(`${Math.round(menuCx+mR*Math.cos(a))},${Math.round(menuCy+mR*Math.sin(a))}`);}
   const mStr=newMenuPts.join(' ');
@@ -3646,6 +3616,7 @@ function renderDynamicWaben(){
     if(menuHit){menuHit.style.left='90.5%';menuHit.style.top=`${(menuCy-mR)/svgH*100}%`;}
   }
 }
+
 
 
 loadAll();
