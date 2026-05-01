@@ -336,6 +336,13 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
   color:#E0EAF0;font-size:15px;font-weight:600;cursor:pointer;
   font-family:Inter,sans-serif;margin-bottom:8px;text-align:left;
 }
+
+.det-name-input{
+  flex:1;background:transparent;border:none;border-bottom:1.5px solid rgba(245,192,74,0.5);
+  color:#F5C04A;font-size:17px;font-weight:700;font-family:Inter,sans-serif;
+  padding:4px 0;outline:none;min-width:0;
+}
+.det-name-input:focus{border-bottom-color:#F5C04A;}
 </style>
 </head>
 <body>
@@ -3097,7 +3104,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 <div class="screen" id="screen-detail" style="background:linear-gradient(to bottom,#9CB0BA,#C8D8DF)">
   <div class="sub-header">
     <button class="sub-back" onclick="closeScreen('screen-detail')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1200" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-    <div class="sub-title" id="det-title">Übung</div>
+    <input id="det-title" class="det-name-input" type="text" value="Übung" onchange="saveExName(this.value)" onclick="this.select()"/>
   </div>
   <div class="sub-body">
     <div class="sc" style="margin-bottom:12px">
@@ -3154,29 +3161,14 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
       <div id="kw-list"></div>
     </div>
 
-    <div class="sub-sl">🎯 Meine Ziele</div>
-    <div class="sub-goals-grid">
-      <div class="sub-goal-card"><div class="sub-goal-title">Stoffwechsel</div><div class="sub-goal-desc">Krafttraining aktiviert den Stoffwechsel dauerhaft — auch in Ruhephasen</div></div>
+    
       <div class="sub-goal-card"><div class="sub-goal-title">Insulinsensitivität</div><div class="sub-goal-desc">Muskelarbeit verbessert die Glukoseverwertung direkt</div></div>
       <div class="sub-goal-card"><div class="sub-goal-title">Longevity</div><div class="sub-goal-desc">Langfristige Gesundheit — Konstanz schlägt Intensität</div></div>
       <div class="sub-goal-card"><div class="sub-goal-title">Gelenkschutz</div><div class="sub-goal-desc">Saubere Technik und Nacken-Prävention sind nicht verhandelbar</div></div>
     </div>
 
-    <div class="sub-sl">📋 Grundprinzipien</div>
-    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🧘</span><span class="sub-prinzip-title">Nacken entspannt</span></div><div class="sub-prinzip-text">Immer auf Nackenspannung achten — vor und während jeder Übung.</div><div class="sub-prinzip-detail">Schultern unten, Kiefer locker, Blick geradeaus.</div></div>
-    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🫁</span><span class="sub-prinzip-title">Keine Pressatmung</span></div><div class="sub-prinzip-text">Ausatmen bei Anstrengung — gleichmäßig und fließend.</div><div class="sub-prinzip-detail">Ausatmen beim Drücken/Ziehen/Strecken. Einatmen beim Ablassen.</div></div>
-    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🐢</span><span class="sub-prinzip-title">Langsames Tempo</span></div><div class="sub-prinzip-text">3 Sek. hoch / 3 Sek. runter — Qualität vor Geschwindigkeit.</div><div class="sub-prinzip-detail">Langsames Ablassen stimuliert mehr Muskelfasern und schützt Gelenke.</div></div>
-    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>⚖️</span><span class="sub-prinzip-title">Sauber vor schwer</span></div><div class="sub-prinzip-text">Technik zuerst — Gewicht steigern erst wenn die Form sitzt.</div><div class="sub-prinzip-detail">Ist die letzte Wiederholung so sauber wie die erste? Dann erhöhen.</div></div>
-    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🔁</span><span class="sub-prinzip-title">Konstanz > Intensität</span></div><div class="sub-prinzip-text">Regelmäßig und moderat schlägt gelegentliches Harttraining.</div><div class="sub-prinzip-detail">3× pro Woche über Monate = mehr Ergebnis als sporadisches Training.</div></div>
-    <div class="sub-prinzip"><div class="sub-prinzip-head"><span>🎯</span><span class="sub-prinzip-title">Kein Muskelversagen</span></div><div class="sub-prinzip-text">2–3 Wiederholungen Reserve behalten — immer kontrolliert.</div><div class="sub-prinzip-detail">Intensität 6–7 von 10: genug Reiz, genug Reserve für Regeneration.</div></div>
-
-    <div class="sub-sl">🩹 Alternativen bei Beschwerden</div>
-    <div class="sub-alt"><div class="sub-alt-label">🧘 Nackenproblem</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Bankdrücken, Seitheben<br><span class="sub-alt-key">Stattdessen: </span>Glute Bridge, leichtes Rudern</div></div>
-    <div class="sub-alt"><div class="sub-alt-label">🔵 Schulterproblem</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Klassisches Bankdrücken<br><span class="sub-alt-key">Stattdessen: </span>Floor Press, reduzierte Bewegung</div></div>
-    <div class="sub-alt"><div class="sub-alt-label">🟡 Ischias / Rücken</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Romanian Deadlift<br><span class="sub-alt-key">Stattdessen: </span>Glute Bridge, leichte Squats</div></div>
-    <div class="sub-alt"><div class="sub-alt-label">🦵 Knieproblem</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>Tiefe Kniebeugen<br><span class="sub-alt-key">Stattdessen: </span>Halbe Squats, Glute Bridge Fokus</div></div>
-    <div class="sub-alt"><div class="sub-alt-label">🟢 Karpaltunnel</div><div class="sub-alt-row"><span class="sub-alt-key">Weglassen: </span>—<br><span class="sub-alt-key">Stattdessen: </span>Neutrale Handgelenke, SZ-Stange</div></div>
-
+    <div class="sub-sl">➕ Übungen</div>
+    <button class="sub-action-btn" onclick="addWabe()">➕ &nbsp;Neue Übung hinzufügen</button>
     <div class="sub-sl">📦 Daten</div>
     <button class="sub-action-btn" onclick="exportJSON()">↓ &nbsp;Export JSON</button>
     <button class="sub-action-btn" onclick="importJSON()">↑ &nbsp;Import JSON</button>
@@ -3328,7 +3320,7 @@ let detIdx=0;
 function openDetail(idx){
   detIdx=idx;
   const ex=EXERCISES[idx];
-  document.getElementById('det-title').textContent=ex.name;
+  document.getElementById('det-title').value=ex.name;
   document.getElementById('det-muscle').textContent=ex.muscle;
   document.getElementById('det-note').textContent=ex.note;
   renderDetailVals();
@@ -3483,9 +3475,167 @@ function todayStr(){ return new Date().toISOString().slice(0,10); }
 function daysAgoStr(n){ const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().slice(0,10); }
 function formatDate(str){ const [y,m,d]=str.split('-');return d+'.'+m+'.'+y; }
 
+
+// ── Save exercise name ────────────────────────────────────────────────
+function saveExName(val){
+  if(!val.trim()) return;
+  EXERCISES[detIdx].name=val.trim();
+  // Update main screen text
+  const el=document.getElementById('ex-name-'+detIdx);
+  if(el) el.textContent=val.trim();
+  saveExercises();
+}
+
+// ── Add new wabe ──────────────────────────────────────────────────────
+function addWabe(){
+  const idx=EXERCISES.length;
+  const newEx={
+    id:'custom_'+Date.now(),
+    name:'Neue Übung',
+    emoji:'💪',
+    muscle:'–',
+    note:'Beschreibung hier eintragen.',
+    w:10.0, r:8, s:3
+  };
+  EXERCISES.push(newEx);
+  DEFAULTS.push({w:10.0,r:8,s:3});
+  renderDynamicWaben();
+  saveExercises();
+  showToast('Neue Übung hinzugefügt');
+  closeScreen('screen-menu');
+}
+
+function renderDynamicWaben(){
+  // Remove existing dynamic waben
+  document.querySelectorAll('.dynamic-wabe-wrap').forEach(e=>e.remove());
+
+  // Static waben: indices 0-7, cy values and positions
+  const staticCount=8;
+  const dynamicExercises=EXERCISES.slice(staticCount);
+  if(!dynamicExercises.length) return;
+
+  const svgWrap=document.querySelector('.svg-wrap');
+  const hitLayer=document.querySelector('.hit-layer');
+
+  // Row layout: same pattern as static waben
+  // Rows start at y=120,345,570,795 — next rows at 1020,1245...
+  // Left cx=110 (26.7%), right cx=303 (73.5%)
+  // Versatz: ±7px alternating
+  const REIHEN_MITTE=[120,345,570,795,1020,1245,1470,1695];
+  const VERSATZ=7;
+
+  dynamicExercises.forEach((ex,di)=>{
+    const i=staticCount+di;
+    const reiheIdx=Math.floor(i/2);
+    const isLeft=i%2===0;
+    const mitte=REIHEN_MITTE[reiheIdx]||( 795+(reiheIdx-3)*225 );
+    const cx_pct=isLeft?'26.7%':'73.5%';
+    const cy=reiheIdx%2===0
+      ?(isLeft?mitte-VERSATZ:mitte+VERSATZ)
+      :(isLeft?mitte+VERSATZ:mitte-VERSATZ);
+
+    // SVG wabe
+    const svgNS='http://www.w3.org/2000/svg';
+    const g=document.createElementNS(svgNS,'g');
+    g.setAttribute('class','dynamic-wabe-wrap');
+
+    // Create hexagon path (flat orientation, r=86)
+    const R=86;
+    const svgCX=isLeft?110:303;
+    const pts=[];
+    for(let k=0;k<6;k++){
+      const a=k*Math.PI/3;
+      pts.push(`${Math.round(svgCX+R*Math.cos(a))},${Math.round(cy+R*Math.sin(a))}`);
+    }
+    const ptsStr=pts.join(' ');
+
+    // Shadow group
+    const gSch=document.createElementNS(svgNS,'g');
+    gSch.setAttribute('filter','url(#sch)');
+    const poly=document.createElementNS(svgNS,'polygon');
+    poly.setAttribute('points',ptsStr);
+    poly.setAttribute('fill','url(#vg)');
+    gSch.appendChild(poly);
+    g.appendChild(gSch);
+
+    // Glow
+    const gGl=document.createElementNS(svgNS,'g');
+    gGl.setAttribute('filter','url(#gl)');
+    gGl.setAttribute('style','pointer-events:none');
+    const polyGlow=document.createElementNS(svgNS,'polygon');
+    polyGlow.setAttribute('points',ptsStr);
+    polyGlow.setAttribute('fill','none');
+    polyGlow.setAttribute('stroke','#F5C04A');
+    polyGlow.setAttribute('stroke-width','3');
+    gGl.appendChild(polyGlow);
+    g.appendChild(gGl);
+
+    // Weight text
+    const tW=document.createElementNS(svgNS,'text');
+    tW.setAttribute('id','ex-weight-'+i);
+    tW.setAttribute('x',String(svgCX));
+    tW.setAttribute('y',String(cy-30));
+    tW.setAttribute('text-anchor','middle');
+    tW.setAttribute('font-size','22');
+    tW.setAttribute('font-weight','700');
+    tW.setAttribute('fill','#F5C04A');
+    tW.textContent=Number.isInteger(ex.w)?ex.w:ex.w.toFixed(1);
+    g.appendChild(tW);
+
+    // Name text
+    const tN=document.createElementNS(svgNS,'text');
+    tN.setAttribute('id','ex-name-'+i);
+    tN.setAttribute('x',String(svgCX));
+    tN.setAttribute('y',String(cy+2));
+    tN.setAttribute('text-anchor','middle');
+    tN.setAttribute('font-size','17');
+    tN.setAttribute('font-weight','700');
+    tN.setAttribute('fill','#C8D8E4');
+    tN.setAttribute('letter-spacing','.3');
+    tN.textContent=ex.name;
+    g.appendChild(tN);
+
+    // Reps text
+    const tR=document.createElementNS(svgNS,'text');
+    tR.setAttribute('id','ex-val-'+i);
+    tR.setAttribute('x',String(svgCX));
+    tR.setAttribute('y',String(cy+38));
+    tR.setAttribute('text-anchor','middle');
+    tR.setAttribute('font-size','22');
+    tR.setAttribute('font-weight','600');
+    tR.setAttribute('fill','#F5C04A');
+    tR.textContent=ex.r;
+    g.appendChild(tR);
+
+    document.querySelector('svg').appendChild(g);
+
+    // Expand SVG viewBox height if needed
+    const svg=document.querySelector('svg');
+    const vb=svg.getAttribute('viewBox').split(' ');
+    const currentH=parseInt(vb[3]);
+    const neededH=cy+R+40;
+    if(neededH>currentH){
+      svg.setAttribute('viewBox',`0 0 412 ${neededH}`);
+    }
+
+    // Hit area div
+    const hitDiv=document.createElement('div');
+    hitDiv.id='hit-'+i;
+    hitDiv.style.cssText=`position:absolute;left:${isLeft?'5.8%':'52.7%'};top:${(cy-R)/915*100}%;width:41.7%;height:${R*2/915*100}%;touch-action:none;cursor:pointer;`;
+    hitLayer.appendChild(hitDiv);
+
+    // Attach touch
+    let startX=0,lastX=0,moved=false;
+    hitDiv.addEventListener('touchstart',e=>{const t=e.touches[0];startX=t.clientX;lastX=t.clientX;moved=false;e.preventDefault();},{passive:false});
+    hitDiv.addEventListener('touchmove',e=>{const t=e.touches[0];if(Math.abs(t.clientX-startX)>8)moved=true;const chunk=t.clientX-lastX;if(Math.abs(chunk)>=30){changeWeight(i,chunk>0?STATE.step:-STATE.step);lastX=t.clientX;}e.preventDefault();},{passive:false});
+    hitDiv.addEventListener('touchend',e=>{if(!moved)openDetail(i);e.preventDefault();},{passive:false});
+  });
+}
+
 loadAll();
 renderAll();
 setupHitAreas();
+renderDynamicWaben();
 
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('mkraft_sw_v2.js').catch(()=>{}); }
 </script>
