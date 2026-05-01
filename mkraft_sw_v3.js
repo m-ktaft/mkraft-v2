@@ -1,4 +1,4 @@
-const CACHE = 'mkraft-v8-fresh';
+const CACHE = 'mkraft-v9-fresh';
 const ASSETS = ['./mkraft_v3.html'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).catch(()=>{}));
