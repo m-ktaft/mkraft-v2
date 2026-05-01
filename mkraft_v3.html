@@ -23,30 +23,31 @@
   --border:rgba(245,192,74,0.25);--border2:rgba(255,255,255,0.1);
   --radius:20px;
 }
-html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4EE;font-family:Inter,sans-serif;}
+html,body{width:100%;min-height:100vh;min-height:100dvh;background:#F5F4EE;font-family:Inter,sans-serif;overflow-x:hidden;}
 
 /* Main frame */
 .main-frame{
-  width:100%;height:100%;
-  display:flex;justify-content:center;align-items:center;
+  width:100%;min-height:100vh;min-height:100dvh;
+  display:flex;flex-direction:column;align-items:center;
   position:relative;
+  overflow-x:hidden;
 }
 
 /* SVG wrapper - position relative so hit divs can overlay */
 .svg-wrap{
   position:relative;
-  width:100vw;height:100vh;height:100dvh;
-  max-width:412px;max-height:915px;
+  width:100%;max-width:412px;
+  flex-shrink:0;
 }
 .svg-wrap svg{
-  width:100%;height:100%;
+  width:100%;height:auto;
   display:block;
 }
 
 /* Hit areas - absolutely positioned over waben */
 .hit-layer{
   position:absolute;
-  inset:0;
+  top:0;left:0;right:0;bottom:0;
   pointer-events:none;
 }
 .hit-layer > div{
@@ -349,7 +350,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 
 <div class="main-frame">
   <div class="svg-wrap">
-<svg style="pointer-events:none" viewBox="0 0 412 915" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+<svg style="pointer-events:none;width:100%;height:auto" viewBox="0 0 412 915" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMin meet">
 <defs>
 <linearGradient id="vg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4A6970"/><stop offset="100%" stop-color="#324A52"/></linearGradient>
 <filter id="sch" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="1" dy="2"/><feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -3512,8 +3513,6 @@ function renderDynamicWaben(){
   document.querySelectorAll('.dynamic-hit').forEach(e=>e.remove());
   if(!dynamicExercises.length) return;
 
-  document.body.style.overflowY='auto';
-  document.documentElement.style.overflowY='auto';
 
   const svg=document.querySelector('svg');
   const hitLayer=document.querySelector('.hit-layer');
@@ -3534,8 +3533,6 @@ function renderDynamicWaben(){
     const neededH=cy+R+80;
     if(neededH>parseInt(vb[3])){
       svg.setAttribute('viewBox',`0 0 ${SVG_W} ${neededH}`);
-      document.querySelector('.svg-wrap').style.maxHeight='none';
-      document.querySelector('.svg-wrap').style.height='auto';
     }
 
     const g=document.createElementNS(svgNS,'g');
