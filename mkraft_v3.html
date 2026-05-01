@@ -23,30 +23,35 @@
   --border:rgba(245,192,74,0.25);--border2:rgba(255,255,255,0.1);
   --radius:20px;
 }
-html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4EE;font-family:Inter,sans-serif;}
+html,body{width:100%;background:#F5F4EE;font-family:Inter,sans-serif;overflow-x:hidden;}
 
 /* Main frame */
 .main-frame{
-  width:100%;height:100%;
-  display:flex;justify-content:center;align-items:center;
-  position:relative;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 /* SVG wrapper - position relative so hit divs can overlay */
 .svg-wrap{
   position:relative;
-  width:100vw;height:100vh;height:100dvh;
-  max-width:412px;max-height:915px;
+  width:100%;
+  max-width:412px;
+  aspect-ratio:412/915;
+  touch-action:none;
+  flex-shrink:0;
 }
 .svg-wrap svg{
   width:100%;height:100%;
   display:block;
+  touch-action:none;
 }
 
 /* Hit areas - absolutely positioned over waben */
 .hit-layer{
   position:absolute;
-  top:0;left:0;right:0;bottom:0;
+  inset:0;
   pointer-events:none;
 }
 .hit-layer > div{
@@ -344,47 +349,24 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 }
 .det-name-input:focus{border-bottom-color:#F5C04A;}
 
-/* Scroll container for dynamic waben */
-.scroll-container{
-  position:fixed;
-  top:0;left:0;right:0;bottom:0;
-  overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  display:flex;
-  justify-content:center;
-  pointer-events:none;
-  z-index:1;
-}
-.scroll-inner{
+
+
+/* Dynamic waben below main screen */
+.dynamic-waben-container{
   width:100%;
   max-width:412px;
-  position:relative;
-  pointer-events:none;
-}
-/* SVG placeholder: keeps scroll height = SVG height initially */
-.svg-placeholder{
-  height:100vh;
-  height:100dvh;
-  width:100%;
-  flex-shrink:0;
-  pointer-events:none;
+  background:#F5F4EE;
 }
 .dynamic-wabe-row{
   width:100%;
-  background:#F5F4EE;
   position:relative;
-  pointer-events:none;
+  background:#F5F4EE;
 }
 </style>
 </head>
 <body>
 
-<div class="scroll-container" id="scroll-container">
-  <div class="scroll-inner" id="scroll-inner">
-    <div class="svg-placeholder"></div>
-  </div>
-</div>
-<div class="main-frame">
+<div class="main-frame" id="main-frame">
   <div class="svg-wrap">
 <svg style="pointer-events:none" viewBox="0 0 412 915" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 <defs>
@@ -3135,6 +3117,7 @@ html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4
 
     </div>
   </div>
+<div class="dynamic-waben-container" id="dynamic-waben-container"></div>
 </div>
 
 <!-- DETAIL SCREEN -->
@@ -3545,24 +3528,18 @@ function addWabe(){
 function renderDynamicWaben(){
   const staticCount=8;
   const dynamicExercises=EXERCISES.slice(staticCount);
+  const container=document.getElementById('dynamic-waben-container');
+  if(!container) return;
 
-  // Remove old dynamic elements
-  document.querySelectorAll('.dynamic-wabe-row').forEach(e=>e.remove());
+  // Remove old rows and hit divs
+  container.innerHTML='';
   document.querySelectorAll('.dynamic-hit').forEach(e=>e.remove());
 
-  const scrollInner=document.getElementById('scroll-inner');
-  const placeholder=document.querySelector('.svg-placeholder');
-
-  if(!dynamicExercises.length){
-    // Reset scroll placeholder to full screen
-    if(placeholder) placeholder.style.height='';
-    return;
-  }
-
-  // Make scroll container interactive
-  document.getElementById('scroll-container').style.pointerEvents='auto';
+  if(!dynamicExercises.length) return;
 
   const SVG_W=412, R=86, VERSATZ=7, ROW_GAP=225, BASE_ROW=795;
+  const svgNS='http://www.w3.org/2000/svg';
+  const mainDefs=document.querySelector('svg defs');
 
   dynamicExercises.forEach((ex,di)=>{
     const i=staticCount+di;
@@ -3571,39 +3548,35 @@ function renderDynamicWaben(){
     const staticRows=[120,345,570,795];
     const rowMid=staticRows[reiheIdx]||(BASE_ROW+(reiheIdx-3)*ROW_GAP);
     const cx=isLeft?110:303;
-    const cy=reiheIdx%2===0?(isLeft?rowMid-VERSATZ:rowMid+VERSATZ):(isLeft?rowMid+VERSATZ:rowMid-VERSATZ);
+    const localCy=ROW_GAP/2;
 
-    // Row height: ROW_GAP
-    const rowH=ROW_GAP;
-
-    // Create SVG row
+    // Row div
     const rowDiv=document.createElement('div');
     rowDiv.className='dynamic-wabe-row';
-    rowDiv.style.height=rowH+'px';
+    rowDiv.style.height=ROW_GAP+'px';
+    rowDiv.style.touchAction='none';
 
-    const svgNS='http://www.w3.org/2000/svg';
+    // Row SVG
     const rowSvg=document.createElementNS(svgNS,'svg');
-    rowSvg.setAttribute('viewBox',`0 0 ${SVG_W} ${rowH}`);
+    rowSvg.setAttribute('viewBox',`0 0 ${SVG_W} ${ROW_GAP}`);
     rowSvg.setAttribute('width','100%');
-    rowSvg.setAttribute('height',String(rowH));
+    rowSvg.setAttribute('height',String(ROW_GAP));
     rowSvg.setAttribute('style','display:block;pointer-events:none;');
-    rowSvg.setAttribute('xmlns','http://www.w3.org/2000/svg');
 
-    // Copy defs from main SVG
-    const mainDefs=document.querySelector('svg defs');
+    // Copy defs
     if(mainDefs) rowSvg.appendChild(mainDefs.cloneNode(true));
 
     // Background
-    const bgRect=document.createElementNS(svgNS,'rect');
-    bgRect.setAttribute('width',String(SVG_W));bgRect.setAttribute('height',String(rowH));
-    bgRect.setAttribute('fill','#F5F4EE');rowSvg.appendChild(bgRect);
+    const bg=document.createElementNS(svgNS,'rect');
+    bg.setAttribute('width',String(SVG_W));bg.setAttribute('height',String(ROW_GAP));
+    bg.setAttribute('fill','#F5F4EE');rowSvg.appendChild(bg);
 
-    // Wabe centered in row: cy in local coords = rowH/2
-    const localCy=rowH/2;
-
-    // Hexagon points
+    // Hex points
     const hexPts=[];
-    for(let k=0;k<6;k++){const a=k*Math.PI/3;hexPts.push(`${Math.round(cx+R*Math.cos(a))},${Math.round(localCy+R*Math.sin(a))}`);}
+    for(let k=0;k<6;k++){
+      const a=k*Math.PI/3;
+      hexPts.push(`${Math.round(cx+R*Math.cos(a))},${Math.round(localCy+R*Math.sin(a))}`);
+    }
     const pStr=hexPts.join(' ');
 
     // Shadow
@@ -3618,11 +3591,14 @@ function renderDynamicWaben(){
     gGl.appendChild(pg);rowSvg.appendChild(gGl);
 
     // Inner ring
-    const ipts=hexPts.map(p=>{const[x,y]=p.split(',').map(Number);return `${(cx+(x-cx)*0.92).toFixed(1)},${(localCy+(y-localCy)*0.92).toFixed(1)}`;}).join(' ');
-    const pi2=document.createElementNS(svgNS,'polygon');pi2.setAttribute('points',ipts);
-    pi2.setAttribute('fill','none');pi2.setAttribute('stroke','#FFE8A0');
-    pi2.setAttribute('stroke-width','1');pi2.setAttribute('stroke-opacity','.7');
-    pi2.setAttribute('style','pointer-events:none');rowSvg.appendChild(pi2);
+    const ipts=hexPts.map(p=>{
+      const[x,y]=p.split(',').map(Number);
+      return `${(cx+(x-cx)*0.92).toFixed(1)},${(localCy+(y-localCy)*0.92).toFixed(1)}`;
+    }).join(' ');
+    const pr=document.createElementNS(svgNS,'polygon');pr.setAttribute('points',ipts);
+    pr.setAttribute('fill','none');pr.setAttribute('stroke','#FFE8A0');
+    pr.setAttribute('stroke-width','1');pr.setAttribute('stroke-opacity','.7');
+    pr.setAttribute('style','pointer-events:none');rowSvg.appendChild(pr);
 
     // Texts
     const wStr=Number.isInteger(ex.w)?String(ex.w):ex.w.toFixed(1);
@@ -3640,19 +3616,33 @@ function renderDynamicWaben(){
 
     rowDiv.appendChild(rowSvg);
 
-    // Hit div over wabe
+    // Hit div
     const hitDiv=document.createElement('div');hitDiv.className='dynamic-hit';
-    hitDiv.style.cssText=`position:absolute;top:${(localCy-R)/rowH*100}%;left:${isLeft?'5.8%':'52.7%'};width:41.7%;height:${R*2/rowH*100}%;touch-action:none;cursor:pointer;pointer-events:all;`;
+    hitDiv.style.cssText=`position:absolute;top:${(localCy-R)/ROW_GAP*100}%;left:${isLeft?'5.8%':'52.7%'};width:41.7%;height:${R*2/ROW_GAP*100}%;touch-action:none;cursor:pointer;`;
     rowDiv.appendChild(hitDiv);
 
     let sX=0,lX=0,mv=false;
-    hitDiv.addEventListener('touchstart',e=>{const t=e.touches[0];sX=t.clientX;lX=t.clientX;mv=false;e.stopPropagation();e.preventDefault();},{passive:false});
-    hitDiv.addEventListener('touchmove',e=>{const t=e.touches[0];if(Math.abs(t.clientX-sX)>8)mv=true;const ch=t.clientX-lX;if(Math.abs(ch)>=30){changeWeight(i,ch>0?STATE.step:-STATE.step);lX=t.clientX;}e.stopPropagation();e.preventDefault();},{passive:false});
-    hitDiv.addEventListener('touchend',e=>{if(!mv)openDetail(i);e.stopPropagation();e.preventDefault();},{passive:false});
+    hitDiv.addEventListener('touchstart',e=>{
+      const t=e.touches[0];sX=t.clientX;lX=t.clientX;mv=false;
+      e.preventDefault();
+    },{passive:false});
+    hitDiv.addEventListener('touchmove',e=>{
+      const t=e.touches[0];
+      const dx=t.clientX-sX, dy=t.clientY-(e.touches[0].clientY||0);
+      if(Math.abs(t.clientX-sX)>8) mv=true;
+      const ch=t.clientX-lX;
+      if(Math.abs(ch)>=30){changeWeight(i,ch>0?STATE.step:-STATE.step);lX=t.clientX;}
+      e.preventDefault();
+    },{passive:false});
+    hitDiv.addEventListener('touchend',e=>{
+      if(!mv) openDetail(i);
+      e.preventDefault();
+    },{passive:false});
 
-    scrollInner.appendChild(rowDiv);
+    container.appendChild(rowDiv);
   });
 }
+
 
 
 
