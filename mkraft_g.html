@@ -3912,26 +3912,26 @@ function setupHitAreas(){
   for(let i=0;i<EXERCISES.length;i++){
     const el=document.getElementById('hit-'+i);
     if(!el) continue;
+    el.style.touchAction='manipulation';
     (function(idx){
       let startX=0,startY=0,lastX=0,moved=false,isHoriz=false,decided=false;
+      let lastTap=0;
+
       el.addEventListener('touchstart',e=>{
-        // Two fingers = scroll, pass through
         if(e.touches.length>1) return;
         const t=e.touches[0];
         startX=t.clientX;startY=t.clientY;lastX=t.clientX;
         moved=false;isHoriz=false;decided=false;
-        el.style.touchAction='auto';
       },{passive:true});
+
       el.addEventListener('touchmove',e=>{
-        // Two fingers = scroll, pass through
-        if(e.touches.length>1){ el.style.touchAction='auto'; return; }
+        if(e.touches.length>1) return;
         const t=e.touches[0];
         const dx=Math.abs(t.clientX-startX);
         const dy=Math.abs(t.clientY-startY);
-        if(!decided && (dx>6||dy>6)){
+        if(!decided&&(dx>6||dy>6)){
           decided=true;
           isHoriz=dx>dy;
-          if(isHoriz) el.style.touchAction='none';
         }
         if(isHoriz){
           moved=true;
@@ -3940,9 +3940,17 @@ function setupHitAreas(){
           e.preventDefault();
         }
       },{passive:false});
+
       el.addEventListener('touchend',e=>{
-        el.style.touchAction='auto';
-        if(!moved&&!isHoriz) openDetail(idx);
+        if(moved||isHoriz) return;
+        const now=Date.now();
+        if(now-lastTap<350){
+          // Double tap → open detail
+          openDetail(idx);
+          lastTap=0;
+        } else {
+          lastTap=now;
+        }
       },{passive:true});
     })(i);
   }
