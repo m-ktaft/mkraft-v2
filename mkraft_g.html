@@ -23,30 +23,31 @@
   --border:rgba(245,192,74,0.25);--border2:rgba(255,255,255,0.1);
   --radius:20px;
 }
-html,body{width:100%;height:100vh;height:100dvh;overflow:hidden;background:#F5F4EE;font-family:Inter,sans-serif;}
+html,body{width:100%;background:#F5F4EE;font-family:Inter,sans-serif;overflow-x:hidden;}
 
 /* Main frame */
 .main-frame{
-  width:100%;height:100%;
-  display:flex;justify-content:center;align-items:center;
+  width:100%;
+  display:flex;
+  justify-content:center;
   position:relative;
 }
 
 /* SVG wrapper - position relative so hit divs can overlay */
 .svg-wrap{
   position:relative;
-  width:100vw;height:100vh;height:100dvh;
-  max-width:412px;max-height:1140px;
+  width:100%;
+  max-width:412px;
 }
 .svg-wrap svg{
-  width:100%;height:100%;
+  width:100%;height:auto;
   display:block;
 }
 
 /* Hit areas - absolutely positioned over waben */
 .hit-layer{
   position:absolute;
-  inset:0;
+  top:0;left:0;right:0;bottom:0;
   pointer-events:none;
 }
 .hit-layer > div{
