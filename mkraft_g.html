@@ -3915,12 +3915,16 @@ function setupHitAreas(){
     (function(idx){
       let startX=0,startY=0,lastX=0,moved=false,isHoriz=false,decided=false;
       el.addEventListener('touchstart',e=>{
+        // Two fingers = scroll, pass through
+        if(e.touches.length>1) return;
         const t=e.touches[0];
         startX=t.clientX;startY=t.clientY;lastX=t.clientX;
         moved=false;isHoriz=false;decided=false;
         el.style.touchAction='auto';
       },{passive:true});
       el.addEventListener('touchmove',e=>{
+        // Two fingers = scroll, pass through
+        if(e.touches.length>1){ el.style.touchAction='auto'; return; }
         const t=e.touches[0];
         const dx=Math.abs(t.clientX-startX);
         const dy=Math.abs(t.clientY-startY);
