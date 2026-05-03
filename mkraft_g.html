@@ -3745,7 +3745,7 @@ html,body{width:100%;background:#F5F4EE;font-family:Inter,sans-serif;overflow-x:
     <div id="hit-7" style="position:absolute;left:52.7%;top:61.6%;width:41.7%;height:15.1%;touch-action:auto;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
     <div id="hit-8" style="position:absolute;left:5.8%;top:81.3%;width:41.7%;height:15.1%;touch-action:auto;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
     <div id="hit-9" style="position:absolute;left:52.7%;top:82.5%;width:41.7%;height:15.1%;touch-action:auto;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
-    <div id="hit-menu" style="position:absolute;left:90.5%;top:93.2%;width:17%;height:7.7%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;"></div>
+    <div id="hit-menu" style="position:absolute;left:93.7%;top:94.6%;width:10.7%;height:4.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
 
     </div>
   </div>
@@ -3920,52 +3920,15 @@ function setupHitAreas(){
   for(let i=0;i<EXERCISES.length;i++){
     const el=document.getElementById('hit-'+i);
     if(!el) continue;
-    el.style.touchAction='manipulation';
     (function(idx){
-      let startX=0,startY=0,lastX=0,moved=false,isHoriz=false,decided=false;
-      let lastTap=0;
-
-      el.addEventListener('touchstart',e=>{
-        if(e.touches.length>1) return;
-        const t=e.touches[0];
-        startX=t.clientX;startY=t.clientY;lastX=t.clientX;
-        moved=false;isHoriz=false;decided=false;
-      },{passive:true});
-
-      el.addEventListener('touchmove',e=>{
-        if(e.touches.length>1) return;
-        const t=e.touches[0];
-        const dx=Math.abs(t.clientX-startX);
-        const dy=Math.abs(t.clientY-startY);
-        if(!decided&&(dx>6||dy>6)){
-          decided=true;
-          isHoriz=dx>dy;
-        }
-        if(isHoriz){
-          moved=true;
-          const chunk=t.clientX-lastX;
-          if(Math.abs(chunk)>=30){changeWeight(idx,chunk>0?STATE.step:-STATE.step);lastX=t.clientX;}
-          e.preventDefault();
-        }
-      },{passive:false});
-
-      el.addEventListener('touchend',e=>{
-        if(moved||isHoriz) return;
-        const now=Date.now();
-        if(now-lastTap<350){
-          // Double tap → open detail
-          openDetail(idx);
-          lastTap=0;
-        } else {
-          lastTap=now;
-        }
-      },{passive:true});
+      let startX=0,lastX=0,moved=false;
+      el.addEventListener('touchstart',e=>{const t=e.touches[0];startX=t.clientX;lastX=t.clientX;moved=false;e.preventDefault();},{passive:false});
+      el.addEventListener('touchmove',e=>{const t=e.touches[0];if(Math.abs(t.clientX-startX)>8)moved=true;const chunk=t.clientX-lastX;if(Math.abs(chunk)>=30){changeWeight(idx,chunk>0?STATE.step:-STATE.step);lastX=t.clientX;}e.preventDefault();},{passive:false});
+      el.addEventListener('touchend',e=>{if(!moved)openDetail(idx);e.preventDefault();},{passive:false});
     })(i);
   }
   const menuEl=document.getElementById('hit-menu');
-  if(menuEl){
-    menuEl.addEventListener('touchend',e=>{openScreen('screen-menu');e.preventDefault();},{passive:false});
-  }
+  if(menuEl){menuEl.addEventListener('touchend',e=>{openScreen('screen-menu');e.preventDefault();},{passive:false});}
 }
 
 function changeWeight(idx,delta){
