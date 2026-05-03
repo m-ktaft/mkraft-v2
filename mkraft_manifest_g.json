@@ -4,8 +4,8 @@
   "description": "Trainings-Spickzettel f\u00fcr Krafttraining",
   "start_url": "./mkraft_g.html",
   "display": "standalone",
-  "background_color": "#FFF8F6",
-  "theme_color": "#C87060",
+  "background_color": "#F5F4EE",
+  "theme_color": "#324A52",
   "orientation": "portrait",
   "icons": [
     {

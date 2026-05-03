@@ -343,21 +343,6 @@ html,body{width:100%;background:#F5F4EE;font-family:Inter,sans-serif;overflow-x:
   padding:4px 0;outline:none;min-width:0;
 }
 .det-name-input:focus{border-bottom-color:#FFE566;}
-
-#install-banner{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-  background:#C87060;border:2px solid #FFE566;
-  border-radius:20px;padding:14px 28px;
-  display:flex;align-items:center;gap:12px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
-  z-index:999;cursor:pointer;
-  font-family:Inter,sans-serif;
-  animation:slideUp .4s ease;
-}
-#install-banner.hidden{display:none}
-#install-banner span{font-size:15px;font-weight:700;color:#FFF5F2}
-#install-banner .icon{font-size:22px}
-@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 </style>
 </head>
 <body>
@@ -3745,7 +3730,7 @@ html,body{width:100%;background:#F5F4EE;font-family:Inter,sans-serif;overflow-x:
     <div id="hit-7" style="position:absolute;left:52.7%;top:61.6%;width:41.7%;height:15.1%;touch-action:auto;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
     <div id="hit-8" style="position:absolute;left:5.8%;top:81.3%;width:41.7%;height:15.1%;touch-action:auto;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
     <div id="hit-9" style="position:absolute;left:52.7%;top:82.5%;width:41.7%;height:15.1%;touch-action:auto;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
-    <div id="hit-menu" style="position:absolute;left:93.7%;top:94.6%;width:10.7%;height:4.8%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent"></div>
+    <div id="hit-menu" style="position:absolute;left:90.5%;top:93.2%;width:17%;height:7.7%;touch-action:none;cursor:pointer;-webkit-tap-highlight-color:transparent;"></div>
 
     </div>
   </div>
@@ -3920,15 +3905,52 @@ function setupHitAreas(){
   for(let i=0;i<EXERCISES.length;i++){
     const el=document.getElementById('hit-'+i);
     if(!el) continue;
+    el.style.touchAction='manipulation';
     (function(idx){
-      let startX=0,lastX=0,moved=false;
-      el.addEventListener('touchstart',e=>{const t=e.touches[0];startX=t.clientX;lastX=t.clientX;moved=false;e.preventDefault();},{passive:false});
-      el.addEventListener('touchmove',e=>{const t=e.touches[0];if(Math.abs(t.clientX-startX)>8)moved=true;const chunk=t.clientX-lastX;if(Math.abs(chunk)>=30){changeWeight(idx,chunk>0?STATE.step:-STATE.step);lastX=t.clientX;}e.preventDefault();},{passive:false});
-      el.addEventListener('touchend',e=>{if(!moved)openDetail(idx);e.preventDefault();},{passive:false});
+      let startX=0,startY=0,lastX=0,moved=false,isHoriz=false,decided=false;
+      let lastTap=0;
+
+      el.addEventListener('touchstart',e=>{
+        if(e.touches.length>1) return;
+        const t=e.touches[0];
+        startX=t.clientX;startY=t.clientY;lastX=t.clientX;
+        moved=false;isHoriz=false;decided=false;
+      },{passive:true});
+
+      el.addEventListener('touchmove',e=>{
+        if(e.touches.length>1) return;
+        const t=e.touches[0];
+        const dx=Math.abs(t.clientX-startX);
+        const dy=Math.abs(t.clientY-startY);
+        if(!decided&&(dx>6||dy>6)){
+          decided=true;
+          isHoriz=dx>dy;
+        }
+        if(isHoriz){
+          moved=true;
+          const chunk=t.clientX-lastX;
+          if(Math.abs(chunk)>=30){changeWeight(idx,chunk>0?STATE.step:-STATE.step);lastX=t.clientX;}
+          e.preventDefault();
+        }
+      },{passive:false});
+
+      el.addEventListener('touchend',e=>{
+        if(moved||isHoriz) return;
+        const now=Date.now();
+        if(now-lastTap<350){
+          // Double tap → open detail
+          openDetail(idx);
+          lastTap=0;
+        } else {
+          lastTap=now;
+        }
+      },{passive:true});
     })(i);
   }
   const menuEl=document.getElementById('hit-menu');
-  if(menuEl){menuEl.addEventListener('touchend',e=>{openScreen('screen-menu');e.preventDefault();},{passive:false});}
+  if(menuEl){
+    menuEl.addEventListener('touchend',e=>{openScreen('screen-menu');e.preventDefault();},{passive:false});
+  }
 }
 
 function changeWeight(idx,delta){
@@ -4134,34 +4156,6 @@ renderAll();
 setupHitAreas();
 
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('mkraft_sw_g.js').catch(()=>{}); }
-
-// ── PWA Install ───────────────────────────────────────────────────────
-let deferredPrompt = null;
-const installBanner = document.getElementById('install-banner');
-
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBanner.classList.remove('hidden');
-});
-
-installBanner.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  installBanner.classList.add('hidden');
-});
-
-window.addEventListener('appinstalled', () => {
-  installBanner.classList.add('hidden');
-  deferredPrompt = null;
-});
 </script>
-
-<div id="install-banner" class="hidden">
-  <span class="icon">📲</span>
-  <span>App installieren</span>
-</div>
 </body>
 </html>
