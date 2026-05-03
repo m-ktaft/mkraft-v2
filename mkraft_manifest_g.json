@@ -1,33 +1,34 @@
 {
   "name": "mKraft",
   "short_name": "mKraft",
-  "description": "Trainings-Spickzettel f\u00fcr Krafttraining",
-  "start_url": "./mkraft_g.html",
+  "description": "Trainings-Spickzettel für Krafttraining",
+  "start_url": "https://m-ktaft.github.io/mkraft-v2/mkraft_g.html",
+  "scope": "https://m-ktaft.github.io/mkraft-v2/",
   "display": "standalone",
-  "background_color": "#F5F4EE",
-  "theme_color": "#324A52",
+  "background_color": "#FFF8F6",
+  "theme_color": "#C87060",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "mkraft_icon_192_g.png",
+      "src": "https://m-ktaft.github.io/mkraft-v2/mkraft_icon_192_g.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "mkraft_icon_192_g.png",
+      "src": "https://m-ktaft.github.io/mkraft-v2/mkraft_icon_192_g.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "mkraft_icon_512_g.png",
+      "src": "https://m-ktaft.github.io/mkraft-v2/mkraft_icon_512_g.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "mkraft_icon_512_g.png",
+      "src": "https://m-ktaft.github.io/mkraft-v2/mkraft_icon_512_g.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
