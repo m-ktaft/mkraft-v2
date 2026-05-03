@@ -343,6 +343,21 @@ html,body{width:100%;background:#F5F4EE;font-family:Inter,sans-serif;overflow-x:
   padding:4px 0;outline:none;min-width:0;
 }
 .det-name-input:focus{border-bottom-color:#FFE566;}
+
+#install-banner{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:#C87060;border:2px solid #FFE566;
+  border-radius:20px;padding:14px 28px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  z-index:999;cursor:pointer;
+  font-family:Inter,sans-serif;
+  animation:slideUp .4s ease;
+}
+#install-banner.hidden{display:none}
+#install-banner span{font-size:15px;font-weight:700;color:#FFF5F2}
+#install-banner .icon{font-size:22px}
+@keyframes slideUp{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 </style>
 </head>
 <body>
@@ -4156,6 +4171,34 @@ renderAll();
 setupHitAreas();
 
 if('serviceWorker' in navigator){ navigator.serviceWorker.register('mkraft_sw_g.js').catch(()=>{}); }
+
+// ── PWA Install ───────────────────────────────────────────────────────
+let deferredPrompt = null;
+const installBanner = document.getElementById('install-banner');
+
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBanner.classList.remove('hidden');
+});
+
+installBanner.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBanner.classList.add('hidden');
+});
+
+window.addEventListener('appinstalled', () => {
+  installBanner.classList.add('hidden');
+  deferredPrompt = null;
+});
 </script>
+
+<div id="install-banner" class="hidden">
+  <span class="icon">📲</span>
+  <span>App installieren</span>
+</div>
 </body>
 </html>
